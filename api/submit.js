@@ -16,7 +16,8 @@ module.exports = async (req, res) => {
 
   // Build HTML email content
   let emailHtml = '<h2>New Form Submission</h2><table cellpadding="6" cellspacing="0" border="1" style="border-collapse: collapse;">';
- User Uploaded Files') {
+  for (const [key, value] of Object.entries(formData)) {
+    if (key !== 'User Uploaded Files') {
       emailHtml += `<tr><td><strong>${key}</strong></td><td>${value}</td></tr>`;
     }
   }
