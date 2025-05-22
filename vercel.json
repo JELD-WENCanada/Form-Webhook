@@ -1,15 +1,14 @@
 {
-    "version": 2,
-    "builds": [
-        {
-            "src": "api/sitecore_webhook_api.py",
-            "use": "@vercel/python"
-        }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "api/sitecore_webhook_api.py"
-        }
-    ]
+  "version": 2,
+  "functions": {
+    "api/submit.py": {
+      "runtime": "python3.9"
+    }
+  },
+  "routes": [
+    {
+      "src": "/submit",
+      "dest": "api/submit.py"
+    }
+  ]
 }
