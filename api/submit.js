@@ -34,7 +34,7 @@ module.exports = async (req, res) => {
     await transporter.sendMail({
       from: process.env.EMAIL_FROM,
       to: process.env.EMAIL_TO,
-      subject: 'New Form Submission',
+      subject: 'New Customer Submission - Portfolio Project',
       text: emailContent,
     });
 
