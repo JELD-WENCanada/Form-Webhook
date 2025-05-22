@@ -14,23 +14,24 @@ module.exports = async (req, res) => {
 
   const formData = req.body;
 
-  // Build plain text email content
-  let emailContent = '';
+  // Build HTML email content
+  Form Submission</h2><table cellpadding="6" cellspacing="0" border="1" style="border-collapse: collapse;">';
   for (const [key, value] of Object.entries(formData)) {
-    if (key !== 'files') {
-      emailContent += `${key}: ${value}\n`;
+    if (key !== 'User Uploaded Files') {
+      emailHtml += `<tr><td><strong>${key}</strong></td><td>${value}</td></tr>`;
     }
   }
+  emailHtml += '</table>';
 
-  URLs
-  const fileUrls = Array.isArray(formData.files)
-    ? formData.files
-    : formData.files
-    ? [formData.files]
+  // Handle file attachments
+  const fileUrls = Array.isArray(formData['User Uploaded Files'])
+    ? formData['User Uploaded Files']
+    : formData['User Uploaded Files']
+    Uploaded Files']]
     : [];
 
   const attachments = fileUrls.map((fileUrl) => ({
-    filename: fileUrl.split('/').pop(),
+    filename: fileUrl.split('/').shift() + '.file', // Optional: customize filename
     path: fileUrl,
   }));
 
@@ -48,8 +49,8 @@ module.exports = async (req, res) => {
     await transporter.sendMail({
       from: process.env.EMAIL_FROM,
       to: process.env.EMAIL_TO,
-      subject: `New Customer Submission - Portfolio Project`,
-      text: emailContent,
+      subject: `New Submission from ${formData['Full Name']} - Project Submission`,
+      html: emailHtml,
       attachments: attachments,
     });
 
