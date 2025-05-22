@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const path = require('path');
 
 module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') {
@@ -38,10 +39,25 @@ module.exports = async (req, res) => {
     ? [formData['User Uploaded Files']]
     : [];
 
-  const attachments = fileUrls.map((fileUrl, index) => ({
-    filename: `attachment-${index + 1}`,
-    path: fileUrl,
-  }));
+  const attachments = fileUrls.map((fileUrl, index) => {
+    const urlPath = new URL(fileUrl).pathname;
+    const originalName = path.basename(urlPath).split('?')[0];
+    const ext = path.extname(originalName).toLowerCase();
+
+    const mimeTypes = {
+      '.jpg': 'image/jpeg',
+      '.jpeg': 'image/jpeg',
+      '.png': 'image/png',
+      '.gif': 'image/gif',
+      '.pdf': 'application/pdf',
+    };
+
+    return {
+      filename: originalName || `attachment-${index + 1}`,
+      path: fileUrl,
+      contentType: mimeTypes[ext] || 'application/octet-stream',
+    };
+  });
 
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_SERVER,
@@ -69,3 +85,4 @@ module.exports = async (req, res) => {
     res.status(500).json({ error: 'Failed to send email' });
   }
 };
+
