@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
   const formData = req.body;
 
   // Build HTML email content
-  Form Submission</h2><table cellpadding="6" cellspacing="0" border="1" style="border-collapse: collapse;">';
+  let emailHtml = '<h2>New Form Submission</h2><table cellpadding="6" cellspacing="0" border="1" style="border-collapse: collapse;">';
   for (const [key, value] of Object.entries(formData)) {
     if (key !== 'User Uploaded Files') {
       emailHtml += `<tr><td><strong>${key}</strong></td><td>${value}</td></tr>`;
@@ -27,11 +27,8 @@ module.exports = async (req, res) => {
   const fileUrls = Array.isArray(formData['User Uploaded Files'])
     ? formData['User Uploaded Files']
     : formData['User Uploaded Files']
-    Uploaded Files']]
-    : [];
-
-  const attachments = fileUrls.map((fileUrl) => ({
-    filename: fileUrl.split('/').shift() + '.file', // Optional: customize filename
+    ? [ attachments = fileUrls.map((fileUrl, index) => ({
+    filename: `attachment-${index + 1}`,
     path: fileUrl,
   }));
 
@@ -49,7 +46,7 @@ module.exports = async (req, res) => {
     await transporter.sendMail({
       from: process.env.EMAIL_FROM,
       to: process.env.EMAIL_TO,
-      subject: `New Submission from ${formData['Full Name']} - Project Submission`,
+      subject: `New Customer Submission - Portfolio Project`,
       html: emailHtml,
       attachments: attachments,
     });
@@ -60,4 +57,3 @@ module.exports = async (req, res) => {
     res.status(500).json({ error: 'Failed to send email' });
   }
 };
-
