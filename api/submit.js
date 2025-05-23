@@ -17,7 +17,6 @@ module.exports = async (req, res) => {
   }
 
   const form = new formidable.IncomingForm();
-
   form.parse(req, async (err, fields, files) => {
     if (err) {
       console.error('Form parsing error:', err);
@@ -40,7 +39,6 @@ module.exports = async (req, res) => {
     // Handle file attachments
     const attachments = Object.values(files).map((file, index) => {
       const ext = path.extname(file.name).toLowerCase();
-
       const mimeTypes = {
         '.jpg': 'image/jpeg',
         '.jpeg': 'image/jpeg',
@@ -58,9 +56,8 @@ module.exports = async (req, res) => {
     });
 
     // Embed images inline in the HTML content
-    Object.values(files).forEach((file, index) => {
-      const ext = path.extname(file.name).toLowerCase();
-      if (['.jpg', '.jpeg', '.png', '.gif'].includes(ext)) {
+    attachments.forEach((attachment, index) => {
+      if (['image/jpeg', 'image/png', 'image/gif'].includes(attachment.contentType)) {
         emailHtml += `<br><img src="cid:image-${index + 1}" alt="Image ${index + 1}">`;
       }
     });
