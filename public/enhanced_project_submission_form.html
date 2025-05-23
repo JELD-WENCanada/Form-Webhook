@@ -13,10 +13,11 @@
             background-color: #f4f4f4;
             display: flex;
             justify-content: center;
-            align-items: center;
-            height: 100vh;
+            align-items: start; /* Changed to prevent cutting off the top */
+            min-height: 100vh; /* Allows content to grow and be scrollable */
             margin: 0;
             padding: 20px;
+            overflow-y: auto; /* Enables vertical scroll if content is too tall */
         }
         .form-container {
             background-color: #fff;
@@ -211,3 +212,4 @@
     </script>
 </body>
 </html>
+
