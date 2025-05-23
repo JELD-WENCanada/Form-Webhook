@@ -23,7 +23,6 @@
         max-width: 600px;
         width: 100%;
     }
-    /* Small language toggle button top right */
     #langToggle {
         position: absolute;
         top: 8px;
@@ -45,7 +44,7 @@
 
     .form-container {
         background-color: #fff;
-        padding: 20px 24px 40px; /* extra bottom padding for button */
+        padding: 20px 24px 40px;
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0,0,0,0.1);
         text-align: center;
@@ -184,7 +183,7 @@
     <div class="form-container" id="formContainer">
         <h1 data-en="Website Form - Project Submission" data-fr="Formulaire de Soumission de Projet">Website Form - Project Submission</h1>
         <p data-en="We are excited to learn more about your project! Please complete the form below to share the details of your project with us. Whether you are a homeowner, contractor, or designer, JELD-WEN of Canada would love to showcase your project."
-           data-fr="Nous sommes impatients d'en savoir plus sur votre projet ! Veuillez remplir le formulaire ci-dessous pour partager les détails de votre projet avec nous. Que vous soyez propriétaire, entrepreneur ou designer, JELD-WEN du Canada aimerait mettre en valeur votre projet.">
+           data-fr="Nous sommes ravis d’en apprendre davantage sur votre projet ! Veuillez remplir le formulaire ci-dessous pour partager avec nous les détails de votre projet. Que vous soyez propriétaire, entrepreneur ou designer, JELD-WEN du Canada aimerait mettre en valeur votre projet.">
             We are excited to learn more about your project! Please complete the form below to share the details of your project with us. Whether you are a homeowner, contractor, or designer, JELD-WEN of Canada would love to showcase your project.
         </p>
         <p data-en="Our team will review your submission and follow up with you to discuss if we need any more details to showcase this on our website and socials."
@@ -200,31 +199,41 @@
             <input type="date" id="date" name="date" required />
             <small data-en="Please provide the date you are submitting this form." data-fr="Veuillez fournir la date de soumission du formulaire.">Please provide the date you are submitting this form.</small>
 
-            <label for="phone" data-en="Phone" data-fr="Téléphone">Phone <span class="required-message" id="phoneRequired" style="display:none;">Required</span></label>
-            <input type="tel" id="phone" name="phone" required />
-            <small data-en="Please provide your phone number." data-fr="Veuillez fournir votre numéro de téléphone.">Please provide your phone number.</small>
+            <label for="phone" data-en="Phone Number" data-fr="Numéro de téléphone">Phone Number <span class="required-message" id="phoneRequired" style="display:none;">Required</span></label>
+            <input type="tel" id="phone" name="phone" maxlength="20" required />
+            <small data-en="Please provide a contact phone number." data-fr="Veuillez fournir un numéro de téléphone.">Please provide a contact phone number.</small>
 
-            <label for="email" data-en="Email" data-fr="Courriel">Email <span class="required-message" id="emailRequired" style="display:none;">Required</span></label>
-            <input type="email" id="email" name="email" required />
-            <small data-en="Please provide your email." data-fr="Veuillez fournir votre courriel.">Please provide your email.</small>
+            <label for="email" data-en="Email Address" data-fr="Adresse e-mail">Email Address <span class="required-message" id="emailRequired" style="display:none;">Required</span></label>
+            <input type="email" id="email" name="email" maxlength="250" required />
+            <small data-en="Please provide a valid email address." data-fr="Veuillez fournir une adresse e-mail valide.">Please provide a valid email address.</small>
 
-            <label for="files" data-en="Upload Files" data-fr="Télécharger des fichiers">Upload Files <span class="required-message" id="filesRequired" style="display:none;">Required</span></label>
-            <input type="file" id="files" name="files" multiple required />
-            <small data-en="You can upload a maximum of five files, each with a size limit of 5MB."
-                   data-fr="Vous pouvez télécharger jusqu'à cinq fichiers, chacun limité à 5 Mo.">You can upload a maximum of five files, each with a size limit of 5MB.</small>
+            <label for="files" data-en="Upload Images (max 5)" data-fr="Télécharger des images (max 5)">Upload Images (max 5) <span class="required-message" id="filesRequired" style="display:none;">Required - max 5 files</span></label>
+            <input type="file" id="files" name="files" accept="image/*" multiple required />
+            <small data-en="Please upload between 1 and 5 images related to your project." data-fr="Veuillez télécharger entre 1 et 5 images liées à votre projet.">Please upload between 1 and 5 images related to your project.</small>
 
+            <!-- Consent to Share -->
             <label for="consent" class="checkbox-label" data-en="Consent to Share" data-fr="Consentement au partage">
-                <input type="checkbox" id="consent" name="consent" required />
-                I agree that my submitted images and project information may be used for social media and website purposes.
+              <input type="checkbox" id="consent" name="consent" required />
+              I agree that my submitted images and project information may be used for social media and website purposes.
             </label>
             <small data-en="I agree that my submitted images and project information may be used for social media and website purposes."
                    data-fr="J'accepte que mes images soumises et les informations sur mon projet puissent être utilisées pour les réseaux sociaux et le site Web.">I agree that my submitted images and project information may be used for social media and website purposes.</small>
 
+            <!-- Information Accuracy -->
+            <label for="accuracy" class="checkbox-label" data-en="Information Accuracy" data-fr="Exactitude des informations">
+              <input type="checkbox" id="accuracy" name="accuracy" required />
+              I confirm that the information I have provided is accurate and given voluntarily.
+            </label>
+            <small data-en="I confirm that the information I have provided is accurate and given voluntarily."
+                   data-fr="Je confirme que les informations fournies sont exactes et données de mon plein gré.">I confirm that the information I have provided is accurate and given voluntarily.</small>
+
             <button type="submit" disabled data-en="Submit" data-fr="Soumettre">Submit</button>
-            <div class="loading" aria-live="polite" role="status" style="display:none;">Loading...</div>
-            <div class="success" aria-live="polite" role="alert" style="display:none;">Thank you! Your submission has been received.</div>
-            <div class="error" aria-live="polite" role="alert" style="display:none;">Oops! Something went wrong. Please try again later.</div>
+
+            <div class="loading" aria-live="polite" role="status">Loading...</div>
+            <div class="success" aria-live="polite" role="alert">Thank you! Your submission has been received.</div>
+            <div class="error" aria-live="polite" role="alert">Oops! Something went wrong. Please try again later.</div>
         </form>
+
         <div class="footer">
             <p data-en="Thank you for considering JELD-WEN of Canada!" data-fr="Merci de considérer JELD-WEN du Canada !">Thank you for considering JELD-WEN of Canada!</p>
             <div class="social-icons">
@@ -262,6 +271,8 @@
         document.querySelector('.loading').style.display = 'none';
         document.querySelector('.success').style.display = 'none';
         document.querySelector('.error').style.display = 'none';
+        // Reset date to today when language changes
+        setDateToToday();
     }
 
     langToggle.addEventListener('click', switchLanguage);
@@ -277,18 +288,18 @@
         const email = form.email.value.trim();
         const files = form.files.files;
         const consent = form.consent.checked;
+        const accuracy = form.accuracy.checked;
 
         let valid = true;
 
-        // Basic required checks
         if (!fullName) valid = false;
         if (!date) valid = false;
         if (!phone) valid = false;
         if (!email) valid = false;
         if (files.length === 0 || files.length > 5) valid = false;
         if (!consent) valid = false;
+        if (!accuracy) valid = false;
 
-        // Show/hide required messages
         document.getElementById('fullNameRequired').style.display = fullName ? 'none' : 'inline';
         document.getElementById('dateRequired').style.display = date ? 'none' : 'inline';
         document.getElementById('phoneRequired').style.display = phone ? 'none' : 'inline';
@@ -312,16 +323,33 @@
         setTimeout(() => {
             document.querySelector('.loading').style.display = 'none';
 
-            // For demonstration: randomly succeed or fail
+            // For demo: randomly succeed or fail
             if (Math.random() < 0.9) {
                 document.querySelector('.success').style.display = 'block';
                 form.reset();
                 submitBtn.disabled = true;
+                setDateToToday();  // reset date after form reset
             } else {
                 document.querySelector('.error').style.display = 'block';
                 submitBtn.disabled = false;
             }
         }, 1500);
+    });
+
+    // Set date input to today's date in yyyy-mm-dd format
+    function setDateToToday() {
+        const dateInput = document.getElementById('date');
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        dateInput.value = `${yyyy}-${mm}-${dd}`;
+    }
+
+    // Initialize date on page load
+    window.addEventListener('load', () => {
+        setDateToToday();
+        validateForm();
     });
 </script>
 </body>
