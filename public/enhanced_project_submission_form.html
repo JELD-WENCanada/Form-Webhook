@@ -13,6 +13,8 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            width: 100%;
+            box-sizing: border-box;
         }
         .form-container {
             background-color: #fff;
@@ -38,6 +40,7 @@
             margin-bottom: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
+            box-sizing: border-box;
         }
         .form-container input[type="file"] {
             padding: 3px;
@@ -75,9 +78,12 @@
         .form-container .social-icons {
             margin-top: 20px;
         }
+        .form-container .social-icons a {
+            margin: 0 10px;
+            display: inline-block;
+        }
         .form-container .social-icons img {
             width: 30px;
-            margin: 0 10px;
             cursor: pointer;
         }
         @media (max-width: 600px) {
@@ -89,7 +95,7 @@
 </head>
 <body>
     <div class="form-container">
-        <h1 style="color: #1D446B;">Website Form - Project Submission</h1>
+        <h1>Website Form - Project Submission</h1>
         <p>We are excited to learn more about your project! Please complete the form below to share the details of your window or door project with us. Whether you are a homeowner, contractor, or designer, this is the first step in collaborating with JELD-WEN of Canada.</p>
         <p>Our team will review your submission and follow up with you to discuss your needs and how we can help bring your vision to life.</p>
         <form id="projectForm">
@@ -132,9 +138,15 @@
         </form>
         <div class="footer">Thank you for sharing your project with us!</div>
         <div class="social-icons">
-            <img src="facebook-icon.png" alt="Facebook">
-            <img src="instagram-icon.png" alt="Instagram">
-            <img src="linkedin-icon.png" alt="LinkedIn">
+            <a href="https://www.facebook.com/JELDWENCanada/" target="_blank">
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
+            </a>
+            <a href="https://www.instagram.com/jeldwencanada/" target="_blank">
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram">
+            </a>
+            <a href="https://www.linkedin.com/company/jeld-wen-windows-doors-canada/posts/?feedView=all" target="_blank">
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733561.png" alt="LinkedIn">
+            </a>
         </div>
     </div>
 
