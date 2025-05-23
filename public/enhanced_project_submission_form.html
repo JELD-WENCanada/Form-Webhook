@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Project Submission Form</title>
   <style>
     * {
       box-sizing: border-box;
     }
+
     body {
       font-family: 'Frutiger', Arial, sans-serif;
       background-color: #f4f4f4;
       display: flex;
       justify-content: center;
-      align-items: center;
-      height: 100vh;
+      align-items: flex-start;
+      min-height: 100vh;
       margin: 0;
-      padding: 20px;
+      padding: 40px 20px;
+      overflow-y: auto;
     }
+
     .form-container {
       background-color: #fff;
       padding: 20px 24px;
@@ -26,82 +29,92 @@
       max-width: 600px;
       width: 100%;
       text-align: center;
-      position: relative;
     }
-    .language-toggle {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      font-size: 0.9em;
-    }
-    .language-toggle span {
-      cursor: pointer;
-      color: #1D446B;
-      font-weight: bold;
-      margin: 0 4px;
-    }
-    .language-toggle span.active {
-      text-decoration: underline;
-    }
+
     .form-container h1 {
       color: #1D446B;
       margin-top: 0;
     }
-    label {
+
+    .form-container label {
       display: block;
       margin: 15px 0 5px;
       text-align: left;
       font-weight: bold;
     }
-    input, textarea {
+
+    .form-container input,
+    .form-container textarea {
       width: 100%;
       padding: 10px;
       margin-bottom: 10px;
       border: 1px solid #ccc;
       border-radius: 4px;
     }
-    input[type="file"] {
+
+    .form-container input[type="file"] {
       padding: 3px;
     }
-    button {
+
+    .form-container button {
       background-color: #007BFF;
       color: #fff;
       padding: 10px 20px;
       border: none;
       border-radius: 4px;
       cursor: pointer;
-      margin-top: 10px;
+      margin-top: 20px;
     }
-    button:disabled {
+
+    .form-container button:disabled {
       background-color: #ccc;
     }
-    .loading, .success, .error {
+
+    .form-container .loading {
+      display: none;
+    }
+
+    .form-container .success,
+    .form-container .error {
       display: none;
       margin-top: 20px;
     }
-    .success { color: green; }
-    .error { color: red; }
-    .footer {
+
+    .form-container .success {
+      color: green;
+    }
+
+    .form-container .error {
+      color: red;
+    }
+
+    .form-container .footer {
       margin-top: 20px;
       font-size: 0.9em;
       color: #666;
     }
-    .social-icons {
+
+    .form-container .social-icons {
       margin-top: 20px;
     }
-    .social-icons a {
+
+    .form-container .social-icons a {
       margin: 0 10px;
       display: inline-block;
     }
-    .social-icons img {
+
+    .form-container .social-icons img {
       width: 30px;
       cursor: pointer;
     }
+
     @media (max-width: 600px) {
       .form-container {
         padding: 10px;
+        margin-top: 20px;
       }
     }
+
     .required-message {
       color: red;
       font-size: 0.9em;
@@ -111,46 +124,50 @@
 </head>
 <body>
   <div class="form-container">
-    <div class="language-toggle">
-      <span id="en" class="active">EN</span> | <span id="fr">FR</span>
-    </div>
-    <h1 data-en="Website Form - Project Submission" data-fr="Formulaire de soumission de projet">Website Form - Project Submission</h1>
-    <p data-en="We are excited to learn more about your project!..." data-fr="Nous sommes ravis d'en savoir plus sur votre projet !...">
-      We are excited to learn more about your project! Please complete the form below to share the details of your window or door project with us.
-    </p>
+    <h1>Website Form - Project Submission</h1>
+    <p>We are excited to learn more about your project! Please complete the form below to share the details of your window or door project with us.</p>
+    <p>Our team will review your submission and follow up with you to discuss how we can help bring your vision to life.</p>
+    
     <form id="projectForm">
-      <label for="fullName" data-en="Full Name" data-fr="Nom complet">Full Name</label>
-      <input type="text" id="fullName" name="fullName" required>
-      <small data-en="Please provide your full name." data-fr="Veuillez fournir votre nom complet.">Please provide your full name.</small>
+      <label for="fullName">Full Name <span class="required-message" id="fullNameRequired">Required</span></label>
+      <input type="text" id="fullName" name="fullName" maxlength="200" required>
+      <small>Please provide your full name.</small>
 
-      <label for="date" data-en="Date" data-fr="Date">Date</label>
+      <label for="date">Date <span class="required-message" id="dateRequired">Required</span></label>
       <input type="date" id="date" name="date" required>
+      <small>Please provide the date you are submitting this form.</small>
 
-      <label for="phone" data-en="Phone" data-fr="Téléphone">Phone</label>
+      <label for="phone">Phone <span class="required-message" id="phoneRequired">Required</span></label>
       <input type="tel" id="phone" name="phone" required>
+      <small>Please provide your phone number.</small>
 
-      <label for="email" data-en="Email" data-fr="Courriel">Email</label>
+      <label for="email">Email <span class="required-message" id="emailRequired">Required</span></label>
       <input type="email" id="email" name="email" required>
+      <small>Please provide your email.</small>
 
-      <label for="files" data-en="Upload Files" data-fr="Téléverser des fichiers">Upload Files</label>
+      <label for="files">Upload Files <span class="required-message" id="filesRequired">Required</span></label>
       <input type="file" id="files" name="files" multiple required>
+      <small>You can upload a maximum of five files, each with a size limit of 5MB.</small>
 
-      <label for="consent" data-en="Consent to Share" data-fr="Consentement à partager">Consent to Share</label>
+      <label for="consent">Consent to Share <span class="required-message" id="consentRequired">Required</span></label>
       <input type="checkbox" id="consent" name="consent" required>
-      <small data-en="I agree that my submitted images..." data-fr="J'accepte que mes images...">I agree that my submitted images and project information may be used for social media and website purposes.</small>
+      <small>I agree that my submitted images and project information may be used for social media and website purposes.</small>
 
-      <label for="projectDetails" data-en="Project Details" data-fr="Détails du projet">Project Details</label>
+      <label for="projectDetails">Project Details</label>
       <textarea id="projectDetails" name="projectDetails" maxlength="1000"></textarea>
+      <small>Please provide details of your project such as windows or doors used.</small>
 
-      <label for="accuracy" data-en="Accuracy Confirmation" data-fr="Confirmation de l'exactitude">Accuracy Confirmation</label>
+      <label for="accuracy">Accuracy Confirmation <span class="required-message" id="accuracyRequired">Required</span></label>
       <input type="checkbox" id="accuracy" name="accuracy" required>
+      <small>The information I have provided is accurate and by own admission.</small>
 
       <button type="submit">Submit</button>
       <div class="loading">Submitting...</div>
       <div class="success">Thank you! Your submission has been received.</div>
       <div class="error">An error occurred. Please try again.</div>
     </form>
-    <div class="footer" data-en="Thank you for sharing your project with us!" data-fr="Merci de partager votre projet avec nous !">Thank you for sharing your project with us!</div>
+
+    <div class="footer">Thank you for sharing your project with us!</div>
     <div class="social-icons">
       <a href="https://www.facebook.com/JELDWENCanada/" target="_blank">
         <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
@@ -165,28 +182,14 @@
   </div>
 
   <script>
-    // Set today's date
-    const dateInput = document.getElementById('date');
+    // Set date field to today's date and prevent choosing other dates
     const today = new Date().toISOString().split('T')[0];
+    const dateInput = document.getElementById('date');
     dateInput.value = today;
     dateInput.min = today;
     dateInput.max = today;
 
-    // Language toggle
-    const langToggle = document.querySelectorAll('.language-toggle span');
-    langToggle.forEach(toggle => {
-      toggle.addEventListener('click', () => {
-        langToggle.forEach(t => t.classList.remove('active'));
-        toggle.classList.add('active');
-        const lang = toggle.id;
-
-        document.querySelectorAll('[data-en]').forEach(el => {
-          el.textContent = el.getAttribute(`data-${lang}`);
-        });
-      });
-    });
-
-    // Form submit logic
+    // Form submission logic
     document.getElementById('projectForm').addEventListener('submit', async function(event) {
       event.preventDefault();
       const form = event.target;
@@ -206,6 +209,7 @@
 
         if (response.ok) {
           form.reset();
+          dateInput.value = today; // reset to today's date again
           success.style.display = 'block';
         } else {
           throw new Error('Network response was not ok');
@@ -215,6 +219,25 @@
       } finally {
         loading.style.display = 'none';
       }
+    });
+
+    // Hide 'Required' messages on input
+    document.querySelectorAll('input, textarea').forEach(element => {
+      element.addEventListener('input', function () {
+        const requiredMessage = document.getElementById(element.id + 'Required');
+        if (requiredMessage) {
+          requiredMessage.style.display = 'none';
+        }
+      });
+    });
+
+    document.querySelectorAll('input[type="file"]').forEach(element => {
+      element.addEventListener('change', function () {
+        const requiredMessage = document.getElementById(element.id + 'Required');
+        if (requiredMessage) {
+          requiredMessage.style.display = 'none';
+        }
+      });
     });
   </script>
 </body>
