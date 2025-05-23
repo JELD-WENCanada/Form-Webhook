@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
 const path = require('path');
 const formidable = require('formidable');
+const { Writable } = require('stream');
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -12,28 +13,27 @@ module.exports = async (req, res) => {
   }
 
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
+   405).json({ error: 'Method not allowed' });
   }
 
-  const form = new formidable.IncomingForm({ multiples: true });
+  const fileBuffers = {};
 
-  // Buffer file content instead of writing to disk
-  form.onPart = function (part) {
-    if (part.filename) {
+  const form = new formidable.IncomingForm({
+    multiples: true,
+    fileWriteStreamHandler: (file) => {
       const chunks = [];
-      part.on('data', chunk => chunks.push(chunk));
-      part.on('end', () => {
-        part.buffer = Buffer.concat(chunks);
-        form.emit('file', part.name, {
-          name: part.filename,
-          buffer: part.buffer,
-          mimetype: part.mime,
-        });
-      });
-    } else {
-      form.handlePart(part);
+      const writable = new Writable({
+        write(chunk, encoding, callback) {
+          chunks.push(chunk);
+          callback();
+        },
+        final(callback) {
+          file.buffer = Buffer.concat(chunks);
+          callback();
+       .newFilename] = file;
+      return writable;
     }
-  };
+  });
 
   form.parse(req, async (err, fields, files) => {
     if (err) {
@@ -65,16 +65,17 @@ module.exports = async (req, res) => {
       const fileArray = Array.isArray(fileOrFiles) ? fileOrFiles : [fileOrFiles];
 
       for (const file of fileArray) {
-        if (!file || !file.name || !file.buffer) {
+        const bufferedFile = fileBuffers[file.newFilename];
+        if (!bufferedFile || !file.originalFilename || !bufferedFile.buffer) {
           console.warn(`Skipping invalid file input for key: ${key}`);
           continue;
         }
 
-        const ext = path.extname(file.name).toLowerCase();
+        const ext = path.extname(file.originalFilename).toLowerCase();
 
         attachments.push({
-          filename: file.name,
-          content: file.buffer,
+          filename: file.originalFilename,
+          content: bufferedFile.buffer,
           contentType: file.mimetype || mimeTypes[ext] || 'application/octet-stream',
           cid: `image-${attachments.length + 1}`,
         });
@@ -111,4 +112,3 @@ module.exports = async (req, res) => {
     }
   });
 };
-
