@@ -13,7 +13,7 @@ module.exports = async (req, res) => {
   }
 
   if (req.method !== 'POST') {
-   405).json({ error: 'Method not allowed' });
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
   const fileBuffers = {};
@@ -29,8 +29,10 @@ module.exports = async (req, res) => {
         },
         final(callback) {
           file.buffer = Buffer.concat(chunks);
+          fileBuffers[file.newFilename] = file;
           callback();
-       .newFilename] = file;
+        }
+      });
       return writable;
     }
   });
