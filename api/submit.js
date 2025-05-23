@@ -1,7 +1,6 @@
 const nodemailer = require('nodemailer');
 const path = require('path');
 const formidable = require('formidable');
-const fs = require('fs');
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -17,6 +16,24 @@ module.exports = async (req, res) => {
   }
 
   const form = new formidable.IncomingForm({ multiples: true });
+
+  // Buffer file content instead of writing to disk
+  form.onPart = function (part) {
+    if (part.filename) {
+      const chunks = [];
+      part.on('data', chunk => chunks.push(chunk));
+      part.on('end', () => {
+        part.buffer = Buffer.concat(chunks);
+        form.emit('file', part.name, {
+          name: part.filename,
+          buffer: part.buffer,
+          mimetype: part.mime,
+        });
+      });
+    } else {
+      form.handlePart(part);
+    }
+  };
 
   form.parse(req, async (err, fields, files) => {
     if (err) {
@@ -48,18 +65,17 @@ module.exports = async (req, res) => {
       const fileArray = Array.isArray(fileOrFiles) ? fileOrFiles : [fileOrFiles];
 
       for (const file of fileArray) {
-        if (!file || !file.name || !file.path) {
+        if (!file || !file.name || !file.buffer) {
           console.warn(`Skipping invalid file input for key: ${key}`);
           continue;
         }
 
         const ext = path.extname(file.name).toLowerCase();
-        const fileBuffer = fs.readFileSync(file.path);
 
         attachments.push({
           filename: file.name,
-          content: fileBuffer,
-          contentType: mimeTypes[ext] || 'application/octet-stream',
+          content: file.buffer,
+          contentType: file.mimetype || mimeTypes[ext] || 'application/octet-stream',
           cid: `image-${attachments.length + 1}`,
         });
 
@@ -95,3 +111,4 @@ module.exports = async (req, res) => {
     }
   });
 };
+
