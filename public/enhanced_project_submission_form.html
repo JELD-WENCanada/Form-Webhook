@@ -5,22 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Submission Form</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Frutiger', Arial, sans-serif;
             background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
-            padding: 0;
-            width: 100%;
-            box-sizing: border-box;
+            padding: 0 10px; /* Add padding to prevent content from touching the edges */
         }
         .form-container {
             background-color: #fff;
-            padding: 20px;
+            padding: 20px 24px; /* Add horizontal padding */
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             max-width: 600px;
             width: 100%;
-            margin: 20px auto;
             text-align: center;
         }
         .form-container h1 {
@@ -30,6 +34,7 @@
             display: block;
             margin: 15px 0 5px;
             text-align: left;
+            font-weight: bold; /* Make labels bold */
         }
         .form-container input,
         .form-container textarea {
@@ -49,6 +54,7 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            margin-top: 10px; /* Ensure button is clearly below the last input field */
         }
         .form-container button:disabled {
             background-color: #ccc;
@@ -86,10 +92,6 @@
         @media (max-width: 600px) {
             .form-container {
                 padding: 10px;
-                margin: 10px;
-            }
-            .form-container h1 {
-                font-size: 1.5em;
             }
         }
     </style>
@@ -143,10 +145,10 @@
                 <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
             </a>
             <a href="https://www.instagram.com/jeldwencanada/" target="_blank">
-                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram">
             </a>
             <a href="https://www.linkedin.com/company/jeld-wen-windows-doors-canada/posts/?feedView=all" target="_blank">
-                <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn">
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733561.png" alt="LinkedIn">
             </a>
         </div>
     </div>
