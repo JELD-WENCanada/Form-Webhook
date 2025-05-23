@@ -32,7 +32,7 @@ module.exports = async (req, res) => {
     }
   }
 
-  // Handle file attachments
+  // Handle file attachments and inline images
   const fileUrls = Array.isArray(formData['User Uploaded Files'])
     ? formData['User Uploaded Files']
     : formData['User Uploaded Files']
@@ -56,7 +56,16 @@ module.exports = async (req, res) => {
       filename: originalName || `attachment-${index + 1}`,
       path: fileUrl,
       contentType: mimeTypes[ext] || 'application/octet-stream',
+      cid: `image-${index + 1}` // Set CID for inline embedding
     };
+  });
+
+  // Embed images inline in the HTML content
+  fileUrls.forEach((fileUrl, index) => {
+    const ext = path.extname(fileUrl).toLowerCase();
+    if (['.jpg', '.jpeg', '.png', '.gif'].includes(ext)) {
+      emailHtml += `<br><img src="cid:image-${index + 1}" alt="Image ${index + 1}">`;
+    }
   });
 
   const transporter = nodemailer.createTransport({
@@ -85,4 +94,3 @@ module.exports = async (req, res) => {
     res.status(500).json({ error: 'Failed to send email' });
   }
 };
-
