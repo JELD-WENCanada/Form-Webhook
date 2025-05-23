@@ -16,8 +16,6 @@ module.exports = async (req, res) => {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const fileBuffers = {};
-
   const form = new formidable.IncomingForm({
     multiples: true,
     fileWriteStreamHandler: (file) => {
@@ -29,7 +27,6 @@ module.exports = async (req, res) => {
         },
         final(callback) {
           file.buffer = Buffer.concat(chunks);
-          fileBuffers[file.newFilename] = file;
           callback();
         }
       });
@@ -67,8 +64,7 @@ module.exports = async (req, res) => {
       const fileArray = Array.isArray(fileOrFiles) ? fileOrFiles : [fileOrFiles];
 
       for (const file of fileArray) {
-        const bufferedFile = fileBuffers[file.newFilename];
-        if (!bufferedFile || !file.originalFilename || !bufferedFile.buffer) {
+        if (!file || !file.originalFilename || !file.buffer) {
           console.warn(`Skipping invalid file input for key: ${key}`);
           continue;
         }
@@ -77,7 +73,7 @@ module.exports = async (req, res) => {
 
         attachments.push({
           filename: file.originalFilename,
-          content: bufferedFile.buffer,
+          content: file.buffer,
           contentType: file.mimetype || mimeTypes[ext] || 'application/octet-stream',
           cid: `image-${attachments.length + 1}`,
         });
