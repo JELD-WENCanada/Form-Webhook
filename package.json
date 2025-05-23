@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "formidable": "^3.5.4",
     "nodemailer": "^6.9.0"
   }
 }
