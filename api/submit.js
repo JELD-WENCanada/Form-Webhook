@@ -4,7 +4,6 @@ const formidable = require('formidable');
 const fs = require('fs');
 
 module.exports = async (req, res) => {
-  // Set CORS headers for all requests
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -17,50 +16,54 @@ module.exports = async (req, res) => {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const form = new formidable.IncomingForm();
+  const form = new formidable.IncomingForm({ multiples: true });
 
   form.parse(req, async (err, fields, files) => {
     if (err) {
       console.error('Form parsing error:', err);
       return res.status(500).json({ error: 'Failed to parse form data' });
-    }
-
-    // Build HTML email content
-    let emailHtml = '<h2>New Form Submission</h2><table cellpadding="6" cellspacing="0" border="1" style="border-collapse: collapse;">';
+    emailHtml = '<h2>New Form Submission</h2><table cellpadding="6" cellspacing="0" border="1" style="border-collapse: collapse;">';
     for (const [key, value] of Object.entries(fields)) {
       emailHtml += `<tr><td><strong>${key}</strong></td><td>${value}</td></tr>`;
     }
     emailHtml += '</table>';
 
-    // Build plain text fallback
     let emailText = 'New Form Submission\n\n';
     for (const [key, value] of Object.entries(fields)) {
       emailText += `${key}: ${value}\n`;
     }
 
-    // Handle file attachments and inline images
     const attachments = [];
-    for (const [key, file] of Object.entries(files)) {
-      const ext = path.extname(file.name).toLowerCase();
-      const mimeTypes = {
-        '.jpg': 'image/jpeg',
-        '.jpeg': 'image/jpeg',
-        '.png': 'image/png',
-        '.gif': 'image/gif',
-        '.pdf': 'application/pdf',
-      };
+    const mimeTypes = {
+      '.jpg': 'image/jpeg',
+      '.jpeg': 'image/jpeg',
+      '.png': 'image/png',
+      '.gif': 'image/gif',
+      '.pdf': 'application/pdf',
+    };
 
-      const fileBuffer = fs.readFileSync(file.path);
-      attachments.push({
-        filename: file.name,
-        content: fileBuffer,
-        contentType: mimeTypes[ext] || 'application/octet-stream',
-        cid: `image-${attachments.length + 1}` // Set CID for inline embedding
-      });
+    for (const [key, fileOrFiles] of Object.entries(files)) {
+      const fileArray = Array.isArray(fileOrFiles) ? fileOrFiles : [fileOrFiles];
 
-      // Embed images inline in the HTML content
-      if (['.jpg', '.jpeg', '.png', '.gif'].includes(ext)) {
-        emailHtml += `<br><img src="cid:image-${attachments.length}" alt="Image ${attachments.length}">`;
+      for (const file of fileArray) {
+        if (!file || !file.name || !file.path) {
+          console.warn(`Skipping invalid file input for key: ${key}`);
+          continue;
+        }
+
+        const ext = path.extname(file.name).toLowerCase();
+        const fileBuffer = fs.readFileSync(file.path);
+
+        attachments.push({
+          filename: file.name,
+          content: fileBuffer,
+          contentType: mimeTypes[ext] || 'application/octet-stream',
+          cid: `image-${attachments.length + 1}`,
+        });
+
+        if (['.jpg', '.jpeg', '.png', '.gif'].includes(ext)) {
+          emailHtml += `<br><img src="cid:image-${attachments.length}" alt="Image ${attachments.length}">`;
+        }
       }
     }
 
@@ -83,7 +86,6 @@ module.exports = async (req, res) => {
         text: emailText,
         attachments: attachments,
       });
-
       res.status(200).json({ message: 'Email sent successfully' });
     } catch (error) {
       console.error('Email error:', error);
