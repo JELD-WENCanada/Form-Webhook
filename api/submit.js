@@ -1,6 +1,7 @@
 const nodemailer = require('nodemailer');
 const path = require('path');
 const formidable = require('formidable');
+const fs = require('fs');
 
 module.exports = async (req, res) => {
   // Set CORS headers for all requests
@@ -24,46 +25,42 @@ module.exports = async (req, res) => {
       return res.status(500).json({ error: 'Failed to parse form data' });
     }
 
-    const formData = fields;
-
     // Build HTML email content
     let emailHtml = '<h2>New Form Submission</h2><table cellpadding="6" cellspacing="0" border="1" style="border-collapse: collapse;">';
-    for (const [key, value] of Object.entries(formData)) {
+    for (const [key, value] of Object.entries(fields)) {
       emailHtml += `<tr><td><strong>${key}</strong></td><td>${value}</td></tr>`;
     }
     emailHtml += '</table>';
 
     // Build plain text fallback
     let emailText = 'New Form Submission\n\n';
-    for (const [key, value] of Object.entries(formData)) {
+    for (const [key, value] of Object.entries(fields)) {
       emailText += `${key}: ${value}\n`;
     }
 
     // Handle file attachments and inline images
     const attachments = [];
-    for (const fileKey in files) {
-      const file = files[fileKey];
-      if (file && file.path) {
-        const ext = path.extname(file.name).toLowerCase();
-        const mimeTypes = {
-          '.jpg': 'image/jpeg',
-          '.jpeg': 'image/jpeg',
-          '.png': 'image/png',
-          '.gif': 'image/gif',
-          '.pdf': 'application/pdf',
-        };
+    for (const [key, file] of Object.entries(files)) {
+      const ext = path.extname(file.name).toLowerCase();
+      const mimeTypes = {
+        '.jpg': 'image/jpeg',
+        '.jpeg': 'image/jpeg',
+        '.png': 'image/png',
+        '.gif': 'image/gif',
+        '.pdf': 'application/pdf',
+      };
 
-        attachments.push({
-          filename: file.name,
-          path: file.path,
-          contentType: mimeTypes[ext] || 'application/octet-stream',
-          cid: `image-${attachments.length + 1}` // Set CID for inline embedding
-        });
+      const fileBuffer = fs.readFileSync(file.path);
+      attachments.push({
+        filename: file.name,
+        content: fileBuffer,
+        contentType: mimeTypes[ext] || 'application/octet-stream',
+        cid: `image-${attachments.length + 1}` // Set CID for inline embedding
+      });
 
-        // Embed images inline in the HTML content
-        if (['.jpg', '.jpeg', '.png', '.gif'].includes(ext)) {
-          emailHtml += `<br><img src="cid:image-${attachments.length}" alt="Image ${attachments.length}">`;
-        }
+      // Embed images inline in the HTML content
+      if (['.jpg', '.jpeg', '.png', '.gif'].includes(ext)) {
+        emailHtml += `<br><img src="cid:image-${attachments.length}" alt="Image ${attachments.length}">`;
       }
     }
 
