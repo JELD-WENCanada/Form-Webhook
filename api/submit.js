@@ -19,7 +19,9 @@ module.exports = async (req, res) => {
   const form = new formidable.IncomingForm({ multiples: true });
 
   form.parse(req, async (err, fields, files) => {
-    parse form data' });
+    if (err) {
+      console.error('Form parsing error:', err);
+      return res.status(500).json({ error: 'Failed to parse form data' });
     }
 
     let emailHtml = '<h2>New Form Submission</h2><table cellpadding="6" cellspacing="0" border="1" style="border-collapse: collapse;">';
