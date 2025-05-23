@@ -16,11 +16,11 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            padding: 0 10px; /* Add padding to prevent content from touching the edges */
+            padding: 20px;
         }
         .form-container {
             background-color: #fff;
-            padding: 20px 24px; /* Add horizontal padding */
+            padding: 20px 24px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             max-width: 600px;
@@ -29,12 +29,13 @@
         }
         .form-container h1 {
             color: #1D446B;
+            margin-top: 0;
         }
         .form-container label {
             display: block;
             margin: 15px 0 5px;
             text-align: left;
-            font-weight: bold; /* Make labels bold */
+            font-weight: bold;
         }
         .form-container input,
         .form-container textarea {
@@ -54,7 +55,7 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            margin-top: 10px; /* Ensure button is clearly below the last input field */
+            margin-top: 10px;
         }
         .form-container button:disabled {
             background-color: #ccc;
@@ -94,6 +95,11 @@
                 padding: 10px;
             }
         }
+        .required-message {
+            color: red;
+            font-size: 0.9em;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -102,27 +108,27 @@
         <p>We are excited to learn more about your project! Please complete the form below to share the details of your window or door project with us. Whether you are a homeowner, contractor, or designer, this is the first step in collaborating with JELD-WEN of Canada.</p>
         <p>Our team will review your submission and follow up with you to discuss your needs and how we can help bring your vision to life.</p>
         <form id="projectForm">
-            <label for="fullName">Full Name *</label>
+            <label for="fullName">Full Name <span class="required-message" id="fullNameRequired">Required</span></label>
             <input type="text" id="fullName" name="fullName" maxlength="200" required>
             <small>Please provide your full name.</small>
 
-            <label for="date">Date *</label>
+            <label for="date">Date <span class="required-message" id="dateRequired">Required</span></label>
             <input type="date" id="date" name="date" required>
             <small>Please provide the date you are submitting this form.</small>
 
-            <label for="phone">Phone *</label>
+            <label for="phone">Phone <span class="required-message" id="phoneRequired">Required</span></label>
             <input type="tel" id="phone" name="phone" required>
             <small>Please provide your phone number.</small>
 
-            <label for="email">Email *</label>
+            <label for="email">Email <span class="required-message" id="emailRequired">Required</span></label>
             <input type="email" id="email" name="email" required>
             <small>Please provide your email.</small>
 
-            <label for="files">Upload Files *</label>
+            <label for="files">Upload Files <span class="required-message" id="filesRequired">Required</span></label>
             <input type="file" id="files" name="files" multiple required>
             <small>You can upload a maximum of five files, each with a size limit of 5MB.</small>
 
-            <label for="consent">Consent to Share *</label>
+            <label for="consent">Consent to Share <span class="required-message" id="consentRequired">Required</span></label>
             <input type="checkbox" id="consent" name="consent" required>
             <small>I agree that my submitted images and project information may be used for social media and website purposes.</small>
 
@@ -130,7 +136,7 @@
             <textarea id="projectDetails" name="projectDetails" maxlength="1000"></textarea>
             <small>Please provide details of your project such as windows or doors used.</small>
 
-            <label for="accuracy">Accuracy Confirmation *</label>
+            <label for="accuracy">Accuracy Confirmation <span class="required-message" id="accuracyRequired">Required</span></label>
             <input type="checkbox" id="accuracy" name="accuracy" required>
             <small>The information I have provided is accurate and by own admission.</small>
 
@@ -145,10 +151,10 @@
                 <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
             </a>
             <a href="https://www.instagram.com/jeldwencanada/" target="_blank">
-                <img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram">
+                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
             </a>
             <a href="https://www.linkedin.com/company/jeld-wen-windows-doors-canada/posts/?feedView=all" target="_blank">
-                <img src="https://cdn-icons-png.flaticon.com/512/733/733561.png" alt="LinkedIn">
+                <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn">
             </a>
         </div>
     </div>
@@ -182,6 +188,25 @@
             } finally {
                 loading.style.display = 'none';
             }
+        });
+
+        // Hide 'Required' message when user starts typing or uploading
+        document.querySelectorAll('input, textarea').forEach(element => {
+            element.addEventListener('input', function() {
+                const requiredMessage = document.getElementById(element.id + 'Required');
+                if (requiredMessage) {
+                    requiredMessage.style.display = 'none';
+                }
+            });
+        });
+
+        document.querySelectorAll('input[type="file"]').forEach(element => {
+            element.addEventListener('change', function() {
+                const requiredMessage = document.getElementById(element.id + 'Required');
+                if (requiredMessage) {
+                    requiredMessage.style.display = 'none';
+                }
+            });
         });
     </script>
 </body>
