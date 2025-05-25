@@ -1,319 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Submission Form</title>
-    <style>
-        /* [Same CSS you already had] */
-        * {
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Frutiger', Arial, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: start;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            overflow-y: auto;
-        }
-        .form-container {
-            background-color: #fff;
-            padding: 20px 24px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
-            width: 100%;
-            text-align: center;
-        }
-        .form-container h1 {
-            color: #1D446B;
-            margin-top: 0;
-        }
-        .form-container label {
-            display: block;
-            margin: 15px 0 5px;
-            text-align: left;
-            font-weight: bold;
-        }
-        .form-container input,
-        .form-container textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .form-container input[type="file"] {
-            padding: 3px;
-        }
-        .form-container button {
-            background-color: #007BFF;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        .form-container button:disabled {
-            background-color: #ccc;
-        }
-        .form-container .loading {
-            display: none;
-        }
-        .form-container .success,
-        .form-container .error {
-            display: none;
-            margin-top: 20px;
-        }
-        .form-container .success {
-            color: green;
-        }
-        .form-container .error {
-            color: red;
-        }
-        .form-container .footer {
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: #666;
-        }
-        .form-container .social-icons {
-            margin-top: 20px;
-        }
-        .form-container .social-icons a {
-            margin: 0 10px;
-            display: inline-block;
-        }
-        .form-container .social-icons img {
-            width: 30px;
-            cursor: pointer;
-        }
-        @media (max-width: 600px) {
-            .form-container {
-                padding: 10px;
-            }
-        }
-        .required-message {
-            color: red;
-            font-size: 0.9em;
-            display: none;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Submission Form</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Frutiger', Arial, sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: start;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .form-container {
+      background-color: #fff;
+      padding: 20px 24px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .form-container h1 {
+      color: #1D446B;
+      margin-top: 0;
+    }
+
+    .form-container label {
+      display: block;
+      margin: 15px 0 5px;
+      text-align: left;
+      font-weight: bold;
+    }
+
+    .form-container input,
+    .form-container textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .form-container input[type="file"] {
+      padding: 3px;
+    }
+
+    .form-container button {
+      background-color: #007BFF;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .form-container button:disabled {
+      background-color: #ccc;
+    }
+
+    .form-container .loading,
+    .form-container .success,
+    .form-container .error {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .form-container .success {
+      color: green;
+    }
+
+    .form-container .error {
+      color: red;
+    }
+
+    .required-message {
+      color: red;
+      font-size: 0.9em;
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+      .form-container {
+        padding: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="form-container">
-        <h1 id="title">Website Form - Project Submission</h1>
-        <p id="intro1">We are excited to learn more about your project!</p>
-        <p id="intro2">Our team will review your submission and follow up with you.</p>
-        <form id="projectForm">
-            <label for="fullName" id="labelFullName">Full Name <span class="required-message" id="fullNameRequired">Required</span></label>
-            <input type="text" id="fullName" name="fullName" maxlength="200" required>
-            <small id="hintFullName">Please provide your full name.</small>
+  <div class="form-container">
+    <h1 id="form-title">Website Form - Project Submission</h1>
+    <p id="intro-text">
+      We are excited to learn more about your project! Please complete the form below to share the details of your project with us.
+      Whether you are a homeowner or builder, this is the first step in showcasing your project with JELD-WEN of Canada.
+    </p>
+    <form id="projectForm">
+      <label for="fullName" id="label-fullName">Full Name <span class="required-message" id="fullNameRequired">Required</span></label>
+      <input type="text" id="fullName" name="fullName" maxlength="200" required>
+      <small id="hint-fullName">Please provide your full name.</small>
 
-            <label for="date" id="labelDate">Date <span class="required-message" id="dateRequired">Required</span></label>
-            <input type="date" id="date" name="date" required>
-            <small id="hintDate">Please provide the date.</small>
+      <label for="date" id="label-date">Date <span class="required-message" id="dateRequired">Required</span></label>
+      <input type="date" id="date" name="date" required>
+      <small id="hint-date">Please provide today's date.</small>
 
-            <label for="phone" id="labelPhone">Phone <span class="required-message" id="phoneRequired">Required</span></label>
-            <input type="tel" id="phone" name="phone" required>
-            <small id="hintPhone">Please provide your phone number.</small>
+      <label for="phone" id="label-phone">Phone <span class="required-message" id="phoneRequired">Required</span></label>
+      <input type="tel" id="phone" name="phone" required>
+      <small id="hint-phone">Please provide your phone number.</small>
 
-            <label for="email" id="labelEmail">Email <span class="required-message" id="emailRequired">Required</span></label>
-            <input type="email" id="email" name="email" required>
-            <small id="hintEmail">Please provide your email.</small>
+      <label for="email" id="label-email">Email <span class="required-message" id="emailRequired">Required</span></label>
+      <input type="email" id="email" name="email" required>
+      <small id="hint-email">Please provide your email.</small>
 
-            <label for="files" id="labelFiles">Upload Files <span class="required-message" id="filesRequired">Required</span></label>
-            <input type="file" id="files" name="files" multiple required>
-            <small id="hintFiles">Max 5 files, each under 5MB.</small>
+      <label for="files" id="label-files">Upload Files <span class="required-message" id="filesRequired">Required</span></label>
+      <input type="file" id="files" name="files" multiple required>
+      <small id="hint-files">You can upload a maximum of five files, each with a size limit of 5MB.</small>
 
-            <label for="consent" id="labelConsent">Consent to Share <span class="required-message" id="consentRequired">Required</span></label>
-            <input type="checkbox" id="consent" name="consent" required>
-            <small id="hintConsent">I agree to share images and info.</small>
+      <label for="consent" id="label-consent">Consent to Share <span class="required-message" id="consentRequired">Required</span></label>
+      <input type="checkbox" id="consent" name="consent" required>
+      <small id="hint-consent">I agree that my submitted images and project information may be used for social media and website purposes.</small>
 
-            <label for="projectDetails" id="labelDetails">Project Details</label>
-            <textarea id="projectDetails" name="projectDetails" maxlength="1000"></textarea>
-            <small id="hintDetails">Details like windows or doors used.</small>
+      <label for="projectDetails" id="label-projectDetails">Project Details</label>
+      <textarea id="projectDetails" name="projectDetails" maxlength="1000"></textarea>
+      <small id="hint-projectDetails">Please provide details of your project such as windows or doors used.</small>
 
-            <label for="accuracy" id="labelAccuracy">Accuracy Confirmation <span class="required-message" id="accuracyRequired">Required</span></label>
-            <input type="checkbox" id="accuracy" name="accuracy" required>
-            <small id="hintAccuracy">Information is accurate and my own.</small>
+      <label for="accuracy" id="label-accuracy">Accuracy Confirmation <span class="required-message" id="accuracyRequired">Required</span></label>
+      <input type="checkbox" id="accuracy" name="accuracy" required>
+      <small id="hint-accuracy">The information I have provided is accurate and by own admission.</small>
 
-            <button type="submit" id="submitBtn">Submit</button>
-            <div class="loading">Submitting...</div>
-            <div class="success" id="successMessage">Thank you! Your submission has been received.</div>
-            <div class="error" id="errorMessage">An error occurred. Please try again.</div>
-        </form>
-        <div class="footer" id="footerText">Thank you for sharing your project with us!</div>
-        <div class="social-icons">
-            <a href="https://www.facebook.com/JELDWENCanada/" target="_blank">
-                <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
-            </a>
-            <a href="https://www.instagram.com/jeldwencanada/" target="_blank">
-                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
-            </a>
-            <a href="https://www.linkedin.com/company/jeld-wen-windows-doors-canada/posts/?feedView=all" target="_blank">
-                <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn">
-            </a>
-        </div>
-    </div>
+      <button type="submit">Submit</button>
+      <div class="loading">Submitting...</div>
+      <div class="success">Thank you! Your submission has been received.</div>
+      <div class="error">An error occurred. Please try again.</div>
+    </form>
+  </div>
 
-    <script>
-        const translations = {
-            en: {
-                title: "Website Form - Project Submission",
-                intro1: "We are excited to learn more about your project! Please complete the form below to share the details of your project with us.",
-                intro2: "Our team will review your submission and follow up with you to see if we need more details before showcasing your project on our website and socials.",
-                fullName: "Full Name",
-                fullNameHint: "Please provide your full name.",
-                date: "Date",
-                dateHint: "Please provide the date you are submitting this form.",
-                phone: "Phone",
-                phoneHint: "Please provide your phone number.",
-                email: "Email",
-                emailHint: "Please provide your email.",
-                upload: "Upload Files",
-                uploadHint: "You can upload a maximum of five files, each with a size limit of 5MB.",
-                consent: "Consent to Share",
-                consentHint: "I agree that my submitted images and project information may be used for social media and website purposes.",
-                projectDetails: "Project Details",
-                projectDetailsHint: "Please provide details of your project such as windows or doors used.",
-                accuracy: "Accuracy Confirmation",
-                accuracyHint: "The information I have provided is accurate and by own admission.",
-                submit: "Submit",
-                success: "Thank you! Your submission has been received.",
-                error: "An error occurred. Please try again.",
-                footer: "Thank you for sharing your project with us!",
-                required: "Required"
-            },
-            fr: {
-                title: "Formulaire de soumission de projet",
-                intro1: "Nous sommes ravis d'en savoir plus sur votre projet ! Veuillez remplir le formulaire ci-dessous pour partager les détails de votre projet avec nous.",
-                intro2: "Notre équipe examinera votre soumission et vous contactera si nous avons besoin de plus de détails avant de présenter votre projet sur notre site Web et nos réseaux sociaux.",
-                fullName: "Nom complet",
-                fullNameHint: "Veuillez indiquer votre nom complet.",
-                date: "Date",
-                dateHint: "Veuillez indiquer la date de soumission du formulaire.",
-                phone: "Téléphone",
-                phoneHint: "Veuillez indiquer votre numéro de téléphone.",
-                email: "Courriel",
-                emailHint: "Veuillez indiquer votre adresse courriel.",
-                upload: "Téléverser des fichiers",
-                uploadHint: "Vous pouvez téléverser un maximum de cinq fichiers, chacun d'une taille maximale de 5 Mo.",
-                consent: "Consentement à partager",
-                consentHint: "J'accepte que mes images et informations de projet soumises soient utilisées à des fins de médias sociaux et de site Web.",
-                projectDetails: "Détails du projet",
-                projectDetailsHint: "Veuillez fournir des détails sur votre projet, tels que les fenêtres ou les portes utilisées.",
-                accuracy: "Confirmation de l'exactitude",
-                accuracyHint: "Les informations que j'ai fournies sont exactes et selon ma propre déclaration.",
-                submit: "Soumettre",
-                success: "Merci ! Votre soumission a été reçue.",
-                error: "Une erreur s'est produite. Veuillez réessayer.",
-                footer: "Merci de partager votre projet avec nous !",
-                required: "Requis"
-            }
-        };
+  <script>
+    // Set today's date on the date input
+    const today = new Date().toISOString().split('T')[0];
+    const dateInput = document.getElementById('date');
+    dateInput.value = today;
+    dateInput.min = today;
+    dateInput.max = today;
 
-        function detectLanguage() {
-            const lang = document.documentElement.lang || navigator.language || 'en';
-            return lang.startsWith('fr') ? 'fr' : 'en';
+    // Language detection
+    const isFrench = navigator.language.startsWith('fr');
+
+    if (isFrench) {
+      document.documentElement.lang = "fr";
+      document.getElementById("form-title").textContent = "Formulaire de soumission de projet";
+      document.getElementById("intro-text").textContent =
+        "Nous sommes ravis d’en savoir plus sur votre projet ! Veuillez remplir le formulaire ci-dessous pour nous communiquer les détails de votre projet.";
+
+      document.getElementById("label-fullName").innerHTML = 'Nom complet <span class="required-message" id="fullNameRequired">Obligatoire</span>';
+      document.getElementById("hint-fullName").textContent = "Veuillez indiquer votre nom complet.";
+
+      document.getElementById("label-date").innerHTML = 'Date <span class="required-message" id="dateRequired">Obligatoire</span>';
+      document.getElementById("hint-date").textContent = "Veuillez indiquer la date d'aujourd'hui.";
+
+      document.getElementById("label-phone").innerHTML = 'Téléphone <span class="required-message" id="phoneRequired">Obligatoire</span>';
+      document.getElementById("hint-phone").textContent = "Veuillez fournir votre numéro de téléphone.";
+
+      document.getElementById("label-email").innerHTML = 'Email <span class="required-message" id="emailRequired">Obligatoire</span>';
+      document.getElementById("hint-email").textContent = "Veuillez fournir votre adresse email.";
+
+      document.getElementById("label-files").innerHTML = 'Télécharger des fichiers <span class="required-message" id="filesRequired">Obligatoire</span>';
+      document.getElementById("hint-files").textContent = "Vous pouvez télécharger un maximum de cinq fichiers, chacun d’une taille maximale de 5 Mo.";
+
+      document.getElementById("label-consent").innerHTML = 'Consentement à partager <span class="required-message" id="consentRequired">Obligatoire</span>';
+      document.getElementById("hint-consent").textContent = "J’accepte que mes images et informations soumises puissent être utilisées à des fins de médias sociaux et de site web.";
+
+      document.getElementById("label-projectDetails").textContent = 'Détails du projet';
+      document.getElementById("hint-projectDetails").textContent = "Veuillez fournir des détails sur votre projet, tels que les fenêtres ou les portes utilisées.";
+
+      document.getElementById("label-accuracy").innerHTML = 'Confirmation d’exactitude <span class="required-message" id="accuracyRequired">Obligatoire</span>';
+      document.getElementById("hint-accuracy").textContent = "Les informations que j’ai fournies sont exactes et de mon propre aveu.";
+
+      document.querySelector('button[type="submit"]').textContent = "Soumettre";
+      document.querySelector('.success').textContent = "Merci ! Votre soumission a été reçue.";
+      document.querySelector('.error').textContent = "Une erreur s’est produite. Veuillez réessayer.";
+    }
+
+    // Form submission logic
+    document.getElementById('projectForm').addEventListener('submit', async function (event) {
+      event.preventDefault();
+      const form = event.target;
+      const formData = new FormData(form);
+      const loading = form.querySelector('.loading');
+      const success = form.querySelector('.success');
+      const error = form.querySelector('.error');
+
+      loading.style.display = 'block';
+      success.style.display = 'none';
+      error.style.display = 'none';
+
+      try {
+        const response = await fetch('https://form-webhook-omega.vercel.app/api/submit', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (response.ok) {
+          form.reset();
+          dateInput.value = today; // Reset date
+          success.style.display = 'block';
+        } else {
+          throw new Error('Network error');
         }
+      } catch (err) {
+        error.style.display = 'block';
+      } finally {
+        loading.style.display = 'none';
+      }
+    });
 
-        function applyTranslations(lang) {
-            const t = translations[lang];
+    // Hide "Required" when input starts
+    document.querySelectorAll('input, textarea').forEach(el => {
+      el.addEventListener('input', function () {
+        const requiredMsg = document.getElementById(el.id + 'Required');
+        if (requiredMsg) requiredMsg.style.display = 'none';
+      });
+    });
 
-            document.getElementById('title').innerText = t.title;
-            document.getElementById('intro1').innerText = t.intro1;
-            document.getElementById('intro2').innerText = t.intro2;
-
-            document.getElementById('labelFullName').innerHTML = `${t.fullName} <span class="required-message" id="fullNameRequired">${t.required}</span>`;
-            document.getElementById('hintFullName').innerText = t.fullNameHint;
-
-            document.getElementById('labelDate').innerHTML = `${t.date} <span class="required-message" id="dateRequired">${t.required}</span>`;
-            document.getElementById('hintDate').innerText = t.dateHint;
-
-            document.getElementById('labelPhone').innerHTML = `${t.phone} <span class="required-message" id="phoneRequired">${t.required}</span>`;
-            document.getElementById('hintPhone').innerText = t.phoneHint;
-
-            document.getElementById('labelEmail').innerHTML = `${t.email} <span class="required-message" id="emailRequired">${t.required}</span>`;
-            document.getElementById('hintEmail').innerText = t.emailHint;
-
-            document.getElementById('labelFiles').innerHTML = `${t.upload} <span class="required-message" id="filesRequired">${t.required}</span>`;
-            document.getElementById('hintFiles').innerText = t.uploadHint;
-
-            document.getElementById('labelConsent').innerHTML = `${t.consent} <span class="required-message" id="consentRequired">${t.required}</span>`;
-            document.getElementById('hintConsent').innerText = t.consentHint;
-
-            document.getElementById('labelDetails').innerText = t.projectDetails;
-            document.getElementById('hintDetails').innerText = t.projectDetailsHint;
-
-            document.getElementById('labelAccuracy').innerHTML = `${t.accuracy} <span class="required-message" id="accuracyRequired">${t.required}</span>`;
-            document.getElementById('hintAccuracy').innerText = t.accuracyHint;
-
-            document.getElementById('submitBtn').innerText = t.submit;
-            document.getElementById('successMessage').innerText = t.success;
-            document.getElementById('errorMessage').innerText = t.error;
-            document.getElementById('footerText').innerText = t.footer;
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const lang = detectLanguage();
-            applyTranslations(lang);
-        });
-    </script>
-
-    <script>
-        document.getElementById('projectForm').addEventListener('submit', async function(event) {
-            event.preventDefault();
-            const form = event.target;
-            const formData = new FormData(form);
-            const loading = form.querySelector('.loading');
-            const success = form.querySelector('.success');
-            const error = form.querySelector('.error');
-            loading.style.display = 'block';
-            success.style.display = 'none';
-            error.style.display = 'none';
-
-            try {
-                const response = await fetch('https://form-webhook-omega.vercel.app/api/submit', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (response.ok) {
-                    form.reset();
-                    success.style.display = 'block';
-                } else {
-                    throw new Error('Network response was not ok');
-                }
-            } catch (err) {
-                error.style.display = 'block';
-            } finally {
-                loading.style.display = 'none';
-            }
-        });
-
-        // Hide 'Required' message when user types
-        document.querySelectorAll('input, textarea').forEach(element => {
-            element.addEventListener('input', function() {
-                const requiredMessage = document.getElementById(element.id + 'Required');
-                if (requiredMessage) {
-                    requiredMessage.style.display = 'none';
-                }
-            });
-        });
-
-        document.querySelectorAll('input[type="file"]').forEach(element => {
-            element.addEventListener('change', function() {
-                const requiredMessage = document.getElementById(element.id + 'Required');
-                if (requiredMessage) {
-                    requiredMessage.style.display = 'none';
-                }
-            });
-        });
-    </script>
+    document.querySelectorAll('input[type="file"]').forEach(el => {
+      el.addEventListener('change', function () {
+        const requiredMsg = document.getElementById(el.id + 'Required');
+        if (requiredMsg) requiredMsg.style.display = 'none';
+      });
+    });
+  </script>
 </body>
 </html>
