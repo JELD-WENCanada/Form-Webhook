@@ -1,237 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Project Submission Form</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f1f4f9;
-      margin: 0;
-      padding: 30px;
-      display: flex;
-      justify-content: center;
-    }
-    .form-container {
-      background: #fff;
-      padding: 30px;
-      border-radius: 12px;
-      max-width: 600px;
-      width: 100%;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    }
-    h1 {
-      color: #1D446B;
-      text-align: center;
-      margin-bottom: 10px;
-    }
-    p.intro {
-      text-align: center;
-      color: #555;
-    }
-    label {
-      display: block;
-      margin-top: 20px;
-      font-weight: 600;
-      color: #333;
-    }
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 6px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-    textarea {
-      resize: vertical;
-    }
-    small {
-      display: block;
-      color: #666;
-      font-size: 0.85em;
-      margin-top: 5px;
-    }
-    .form-actions {
-      margin-top: 25px;
-      text-align: center;
-    }
-    button {
-      background-color: #007BFF;
-      color: white;
-      padding: 12px 25px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 1em;
-    }
-    button:disabled {
-      background-color: #aaa;
-    }
-    .success, .error, .loading {
-      display: none;
-      text-align: center;
-      margin-top: 15px;
-    }
-    .success { color: green; }
-    .error { color: red; }
-    .required-message {
-      color: red;
-      font-size: 0.9em;
-      display: none;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Project Submission Form</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            margin: 0;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: #1D446B;
+        }
+        label {
+            display: block;
+            margin: 20px 0 5px;
+            font-weight: bold;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-size: 1em;
+        }
+        input[type="checkbox"] {
+            width: auto;
+        }
+        small {
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            width: 100%;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        button.loading::after {
+            content: " ⌛";
+            animation: spin 1s linear infinite;
+            margin-left: 8px;
+        }
+        @keyframes spin {
+            from { transform: rotate(0); }
+            to { transform: rotate(360deg); }
+        }
+        .success, .error {
+            margin-top: 20px;
+            display: none;
+            font-weight: bold;
+        }
+        .success { color: green; }
+        .error { color: red; }
+        .file-preview {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #333;
+        }
+        .required-message {
+            color: red;
+            font-size: 0.9em;
+            display: none;
+        }
+    </style>
 </head>
 <body>
-  <div class="form-container">
-    <h1 id="formTitle">Website Form - Project Submission</h1>
-    <p class="intro" id="formIntro">
-      We are excited to learn more about your project! Please complete the form below to share the details of your project with us.
-    </p>
+<div class="form-container">
+    <h1 data-en="Project Submission Form" data-fr="Formulaire de soumission de projet">Project Submission Form</h1>
     <form id="projectForm">
-      <label for="fullName" id="labelFullName">Full Name <span class="required-message" id="fullNameRequired">Required</span></label>
-      <input type="text" id="fullName" name="fullName" maxlength="200" required>
-      <small id="fullNameNote">Please provide your full name.</small>
+        <label for="fullName"><span data-en="Full Name" data-fr="Nom complet">Full Name</span> <span class="required-message" id="fullNameRequired">Required</span></label>
+        <input type="text" id="fullName" name="fullName" required aria-label="Full Name">
 
-      <label for="date" id="labelDate">Date <span class="required-message" id="dateRequired">Required</span></label>
-      <input type="date" id="date" name="date" required>
-      <small id="dateNote">Only today's date is allowed.</small>
+        <label for="date"><span data-en="Date" data-fr="Date">Date</span> <span class="required-message" id="dateRequired">Required</span></label>
+        <input type="date" id="date" name="date" required aria-label="Submission Date">
 
-      <label for="phone" id="labelPhone">Phone <span class="required-message" id="phoneRequired">Required</span></label>
-      <input type="tel" id="phone" name="phone" required>
-      <small id="phoneNote">Please provide your phone number.</small>
+        <label for="phone"><span data-en="Phone" data-fr="Téléphone">Phone</span> <span class="required-message" id="phoneRequired">Required</span></label>
+        <input type="tel" id="phone" name="phone" inputmode="numeric" pattern="[0-9]*" required aria-label="Phone Number">
 
-      <label for="email" id="labelEmail">Email <span class="required-message" id="emailRequired">Required</span></label>
-      <input type="email" id="email" name="email" required>
-      <small id="emailNote">Please provide your email.</small>
+        <label for="email"><span data-en="Email" data-fr="Courriel">Email</span> <span class="required-message" id="emailRequired">Required</span></label>
+        <input type="email" id="email" name="email" required aria-label="Email">
 
-      <label for="files" id="labelFiles">Upload Files <span class="required-message" id="filesRequired">Required</span></label>
-      <input type="file" id="files" name="files" multiple required>
-      <small id="filesNote">Maximum of 5 files. Each file must be less than 5MB.</small>
+        <label for="files"><span data-en="Upload Files" data-fr="Téléverser des fichiers">Upload Files</span> <span class="required-message" id="filesRequired">Required</span></label>
+        <input type="file" id="files" name="files" multiple required accept="image/*,application/pdf">
+        <small data-en="Upload up to 5 files, max 5MB each." data-fr="Téléversez jusqu'à 5 fichiers, maximum 5 Mo chacun.">Upload up to 5 files, max 5MB each.</small>
+        <div class="file-preview" id="filePreview"></div>
 
-      <label for="consent" id="labelConsent">Consent to Share <span class="required-message" id="consentRequired">Required</span></label>
-      <input type="checkbox" id="consent" name="consent" required>
-      <small id="consentNote">I agree my project may be used on social media or the website.</small>
+        <label for="consent">
+            <input type="checkbox" id="consent" name="consent" required>
+            <span data-en="I agree that my submitted images and project information may be used for social media and website purposes." data-fr="J'accepte que mes images et informations de projet soumises puissent être utilisées à des fins de médias sociaux et de site web.">I agree that my submitted images and project information may be used for social media and website purposes.</span>
+        </label>
 
-      <label for="projectDetails" id="labelDetails">Project Details</label>
-      <textarea id="projectDetails" name="projectDetails" maxlength="1000"></textarea>
-      <small id="detailsNote">Provide project details like window/door types used.</small>
+        <label for="projectDetails"><span data-en="Project Details" data-fr="Détails du projet">Project Details</span></label>
+        <textarea id="projectDetails" name="projectDetails" maxlength="1000"></textarea>
 
-      <label for="accuracy" id="labelAccuracy">Accuracy Confirmation <span class="required-message" id="accuracyRequired">Required</span></label>
-      <input type="checkbox" id="accuracy" name="accuracy" required>
-      <small id="accuracyNote">The info I have provided is accurate and by my own admission.</small>
+        <label for="accuracy">
+            <input type="checkbox" id="accuracy" name="accuracy" required>
+            <span data-en="The information I have provided is accurate and by my own admission." data-fr="Les informations que j'ai fournies sont exactes et de mon propre aveu.">The information I have provided is accurate and by my own admission.</span>
+        </label>
 
-      <div class="form-actions">
-        <button type="submit" id="submitBtn">Submit</button>
-        <div class="loading">Submitting...</div>
-        <div class="success">Thank you! Your submission has been received.</div>
-        <div class="error">An error occurred. Please try again.</div>
-      </div>
+        <button type="submit" id="submitBtn" data-en="Submit" data-fr="Soumettre">Submit</button>
+        <div class="success" id="successMsg" data-en="Thank you! Your submission has been received." data-fr="Merci! Votre soumission a été reçue.">Thank you! Your submission has been received.</div>
+        <div class="error" id="errorMsg" data-en="An error occurred. Please try again." data-fr="Une erreur est survenue. Veuillez réessayer.">An error occurred. Please try again.</div>
     </form>
-  </div>
+</div>
 
-  <script>
-    // Language detection
-    const lang = navigator.language.startsWith("fr") ? "fr" : "en";
-
-    const translations = {
-      fr: {
-        formTitle: "Formulaire de Soumission de Projet",
-        formIntro: "Nous sommes ravis d'en savoir plus sur votre projet ! Veuillez remplir le formulaire ci-dessous.",
-        labelFullName: "Nom complet",
-        fullNameNote: "Veuillez fournir votre nom complet.",
-        labelDate: "Date",
-        dateNote: "Seule la date du jour est autorisée.",
-        labelPhone: "Téléphone",
-        phoneNote: "Veuillez fournir votre numéro de téléphone.",
-        labelEmail: "E-mail",
-        emailNote: "Veuillez fournir votre e-mail.",
-        labelFiles: "Téléverser des fichiers",
-        filesNote: "Maximum de 5 fichiers. Chaque fichier doit être inférieur à 5 Mo.",
-        labelConsent: "Consentement à partager",
-        consentNote: "J'accepte que mon projet soit utilisé sur les réseaux sociaux ou le site.",
-        labelDetails: "Détails du projet",
-        detailsNote: "Fournissez des détails sur le projet comme les fenêtres/portes utilisées.",
-        labelAccuracy: "Confirmation d'exactitude",
-        accuracyNote: "Les informations fournies sont exactes et faites de mon plein gré.",
-        submit: "Soumettre"
-      }
-    };
-
-    if (lang === "fr") {
-      const t = translations.fr;
-      for (const key in t) {
-        const el = document.getElementById(key);
-        if (el) el.innerText = t[key];
-      }
+<script>
+    // Language auto-detection
+    function autoTranslate() {
+        const lang = navigator.language.startsWith('fr') ? 'fr' : 'en';
+        document.querySelectorAll('[data-en]').forEach(el => {
+            el.textContent = el.getAttribute('data-' + lang);
+        });
     }
+    autoTranslate();
 
-    // Limit date to today
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date().toISOString().split("T")[0];
     const dateInput = document.getElementById("date");
     dateInput.value = today;
-    dateInput.min = today;
-    dateInput.max = today;
+    dateInput.setAttribute("min", today);
+    dateInput.setAttribute("max", today);
 
-    // File validation
     document.getElementById("files").addEventListener("change", function () {
-      const files = this.files;
-      if (files.length > 5) {
-        alert("You can only upload a maximum of 5 files.");
-        this.value = "";
-      } else {
-        for (const file of files) {
-          if (file.size > 5 * 1024 * 1024) {
-            alert("Each file must be less than 5MB.");
+        const filePreview = document.getElementById("filePreview");
+        const files = this.files;
+        filePreview.innerHTML = "";
+        if (files.length > 5) {
+            alert("Please upload no more than 5 files.");
             this.value = "";
-            break;
-          }
+            return;
         }
-      }
+        for (let file of files) {
+            if (file.size > 5 * 1024 * 1024) {
+                alert(`File ${file.name} is larger than 5MB.`);
+                this.value = "";
+                filePreview.innerHTML = "";
+                return;
+            }
+            filePreview.innerHTML += `<div>${file.name}</div>`;
+        }
     });
 
-    // Hide 'Required' message on input
-    document.querySelectorAll('input, textarea').forEach(el => {
-      el.addEventListener('input', () => {
-        const reqMsg = document.getElementById(el.id + "Required");
-        if (reqMsg) reqMsg.style.display = "none";
-      });
-    });
-
-    // Form submission
     document.getElementById("projectForm").addEventListener("submit", async function (event) {
-      event.preventDefault();
-      const form = event.target;
-      const formData = new FormData(form);
-      const loading = form.querySelector('.loading');
-      const success = form.querySelector('.success');
-      const error = form.querySelector('.error');
-      loading.style.display = 'block';
-      success.style.display = 'none';
-      error.style.display = 'none';
+        event.preventDefault();
+        const form = this;
+        const formData = new FormData(form);
+        const submitBtn = document.getElementById("submitBtn");
+        const successMsg = document.getElementById("successMsg");
+        const errorMsg = document.getElementById("errorMsg");
 
-      try {
-        const response = await fetch('https://form-webhook-omega.vercel.app/api/submit', {
-          method: 'POST',
-          body: formData
-        });
+        submitBtn.classList.add("loading");
+        successMsg.style.display = "none";
+        errorMsg.style.display = "none";
 
-        if (response.ok) {
-          form.reset();
-          dateInput.value = today;
-          success.style.display = 'block';
-        } else {
-          throw new Error('Submission failed');
+        try {
+            const response = await fetch("https://form-webhook-omega.vercel.app/api/submit", {
+                method: "POST",
+                body: formData
+            });
+
+            if (response.ok) {
+                form.reset();
+                document.getElementById("filePreview").innerHTML = "";
+                successMsg.style.display = "block";
+            } else {
+                throw new Error("Submission failed.");
+            }
+        } catch (err) {
+            errorMsg.style.display = "block";
+        } finally {
+            submitBtn.classList.remove("loading");
         }
-      } catch (e) {
-        error.style.display = 'block';
-      } finally {
-        loading.style.display = 'none';
-      }
     });
-  </script>
+
+    document.querySelectorAll("input, textarea").forEach(element => {
+        element.addEventListener("input", () => {
+            const warning = document.getElementById(element.id + "Required");
+            if (warning) warning.style.display = "none";
+        });
+    });
+</script>
 </body>
 </html>
