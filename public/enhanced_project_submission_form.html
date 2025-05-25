@@ -1,205 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Project Submission Form</title>
   <style>
     * {
       box-sizing: border-box;
     }
-
     body {
-      font-family: 'Frutiger', Arial, sans-serif;
-      background-color: #f4f4f4;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f1f4f9;
+      margin: 0;
+      padding: 30px;
       display: flex;
       justify-content: center;
-      align-items: start;
-      min-height: 100vh;
-      margin: 0;
-      padding: 20px;
-      overflow-y: auto;
     }
-
     .form-container {
-      background-color: #fff;
-      padding: 20px 24px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
       max-width: 600px;
       width: 100%;
-      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
-
-    .form-container h1 {
+    h1 {
       color: #1D446B;
-      margin-top: 0;
+      text-align: center;
+      margin-bottom: 10px;
     }
-
-    .form-container label {
+    p.intro {
+      text-align: center;
+      color: #555;
+    }
+    label {
       display: block;
-      margin: 15px 0 5px;
-      text-align: left;
-      font-weight: bold;
+      margin-top: 20px;
+      font-weight: 600;
+      color: #333;
     }
-
-    .form-container input,
-    .form-container textarea {
+    input, textarea {
       width: 100%;
       padding: 10px;
-      margin-bottom: 10px;
+      margin-top: 6px;
       border: 1px solid #ccc;
-      border-radius: 4px;
+      border-radius: 6px;
     }
-
-    .form-container input[type="file"] {
-      padding: 3px;
+    textarea {
+      resize: vertical;
     }
-
-    .form-container button {
+    small {
+      display: block;
+      color: #666;
+      font-size: 0.85em;
+      margin-top: 5px;
+    }
+    .form-actions {
+      margin-top: 25px;
+      text-align: center;
+    }
+    button {
       background-color: #007BFF;
-      color: #fff;
-      padding: 10px 20px;
+      color: white;
+      padding: 12px 25px;
       border: none;
-      border-radius: 4px;
+      border-radius: 6px;
       cursor: pointer;
-      margin-top: 20px;
+      font-size: 1em;
     }
-
-    .form-container button:disabled {
-      background-color: #ccc;
+    button:disabled {
+      background-color: #aaa;
     }
-
-    .form-container .loading,
-    .form-container .success,
-    .form-container .error {
+    .success, .error, .loading {
       display: none;
-      margin-top: 20px;
+      text-align: center;
+      margin-top: 15px;
     }
-
-    .form-container .success {
-      color: green;
-    }
-
-    .form-container .error {
-      color: red;
-    }
-
+    .success { color: green; }
+    .error { color: red; }
     .required-message {
       color: red;
       font-size: 0.9em;
       display: none;
     }
-
-    @media (max-width: 600px) {
-      .form-container {
-        padding: 10px;
-      }
-    }
   </style>
 </head>
 <body>
   <div class="form-container">
-    <h1 id="form-title">Website Form - Project Submission</h1>
-    <p id="intro-text">
+    <h1 id="formTitle">Website Form - Project Submission</h1>
+    <p class="intro" id="formIntro">
       We are excited to learn more about your project! Please complete the form below to share the details of your project with us.
-      Whether you are a homeowner or builder, this is the first step in showcasing your project with JELD-WEN of Canada.
     </p>
     <form id="projectForm">
-      <label for="fullName" id="label-fullName">Full Name <span class="required-message" id="fullNameRequired">Required</span></label>
+      <label for="fullName" id="labelFullName">Full Name <span class="required-message" id="fullNameRequired">Required</span></label>
       <input type="text" id="fullName" name="fullName" maxlength="200" required>
-      <small id="hint-fullName">Please provide your full name.</small>
+      <small id="fullNameNote">Please provide your full name.</small>
 
-      <label for="date" id="label-date">Date <span class="required-message" id="dateRequired">Required</span></label>
+      <label for="date" id="labelDate">Date <span class="required-message" id="dateRequired">Required</span></label>
       <input type="date" id="date" name="date" required>
-      <small id="hint-date">Please provide today's date.</small>
+      <small id="dateNote">Only today's date is allowed.</small>
 
-      <label for="phone" id="label-phone">Phone <span class="required-message" id="phoneRequired">Required</span></label>
+      <label for="phone" id="labelPhone">Phone <span class="required-message" id="phoneRequired">Required</span></label>
       <input type="tel" id="phone" name="phone" required>
-      <small id="hint-phone">Please provide your phone number.</small>
+      <small id="phoneNote">Please provide your phone number.</small>
 
-      <label for="email" id="label-email">Email <span class="required-message" id="emailRequired">Required</span></label>
+      <label for="email" id="labelEmail">Email <span class="required-message" id="emailRequired">Required</span></label>
       <input type="email" id="email" name="email" required>
-      <small id="hint-email">Please provide your email.</small>
+      <small id="emailNote">Please provide your email.</small>
 
-      <label for="files" id="label-files">Upload Files <span class="required-message" id="filesRequired">Required</span></label>
+      <label for="files" id="labelFiles">Upload Files <span class="required-message" id="filesRequired">Required</span></label>
       <input type="file" id="files" name="files" multiple required>
-      <small id="hint-files">You can upload a maximum of five files, each with a size limit of 5MB.</small>
+      <small id="filesNote">Maximum of 5 files. Each file must be less than 5MB.</small>
 
-      <label for="consent" id="label-consent">Consent to Share <span class="required-message" id="consentRequired">Required</span></label>
+      <label for="consent" id="labelConsent">Consent to Share <span class="required-message" id="consentRequired">Required</span></label>
       <input type="checkbox" id="consent" name="consent" required>
-      <small id="hint-consent">I agree that my submitted images and project information may be used for social media and website purposes.</small>
+      <small id="consentNote">I agree my project may be used on social media or the website.</small>
 
-      <label for="projectDetails" id="label-projectDetails">Project Details</label>
+      <label for="projectDetails" id="labelDetails">Project Details</label>
       <textarea id="projectDetails" name="projectDetails" maxlength="1000"></textarea>
-      <small id="hint-projectDetails">Please provide details of your project such as windows or doors used.</small>
+      <small id="detailsNote">Provide project details like window/door types used.</small>
 
-      <label for="accuracy" id="label-accuracy">Accuracy Confirmation <span class="required-message" id="accuracyRequired">Required</span></label>
+      <label for="accuracy" id="labelAccuracy">Accuracy Confirmation <span class="required-message" id="accuracyRequired">Required</span></label>
       <input type="checkbox" id="accuracy" name="accuracy" required>
-      <small id="hint-accuracy">The information I have provided is accurate and by own admission.</small>
+      <small id="accuracyNote">The info I have provided is accurate and by my own admission.</small>
 
-      <button type="submit">Submit</button>
-      <div class="loading">Submitting...</div>
-      <div class="success">Thank you! Your submission has been received.</div>
-      <div class="error">An error occurred. Please try again.</div>
+      <div class="form-actions">
+        <button type="submit" id="submitBtn">Submit</button>
+        <div class="loading">Submitting...</div>
+        <div class="success">Thank you! Your submission has been received.</div>
+        <div class="error">An error occurred. Please try again.</div>
+      </div>
     </form>
   </div>
 
   <script>
-    // Set today's date on the date input
+    // Language detection
+    const lang = navigator.language.startsWith("fr") ? "fr" : "en";
+
+    const translations = {
+      fr: {
+        formTitle: "Formulaire de Soumission de Projet",
+        formIntro: "Nous sommes ravis d'en savoir plus sur votre projet ! Veuillez remplir le formulaire ci-dessous.",
+        labelFullName: "Nom complet",
+        fullNameNote: "Veuillez fournir votre nom complet.",
+        labelDate: "Date",
+        dateNote: "Seule la date du jour est autorisée.",
+        labelPhone: "Téléphone",
+        phoneNote: "Veuillez fournir votre numéro de téléphone.",
+        labelEmail: "E-mail",
+        emailNote: "Veuillez fournir votre e-mail.",
+        labelFiles: "Téléverser des fichiers",
+        filesNote: "Maximum de 5 fichiers. Chaque fichier doit être inférieur à 5 Mo.",
+        labelConsent: "Consentement à partager",
+        consentNote: "J'accepte que mon projet soit utilisé sur les réseaux sociaux ou le site.",
+        labelDetails: "Détails du projet",
+        detailsNote: "Fournissez des détails sur le projet comme les fenêtres/portes utilisées.",
+        labelAccuracy: "Confirmation d'exactitude",
+        accuracyNote: "Les informations fournies sont exactes et faites de mon plein gré.",
+        submit: "Soumettre"
+      }
+    };
+
+    if (lang === "fr") {
+      const t = translations.fr;
+      for (const key in t) {
+        const el = document.getElementById(key);
+        if (el) el.innerText = t[key];
+      }
+    }
+
+    // Limit date to today
     const today = new Date().toISOString().split('T')[0];
-    const dateInput = document.getElementById('date');
+    const dateInput = document.getElementById("date");
     dateInput.value = today;
     dateInput.min = today;
     dateInput.max = today;
 
-    // Language detection
-    const isFrench = navigator.language.startsWith('fr');
+    // File validation
+    document.getElementById("files").addEventListener("change", function () {
+      const files = this.files;
+      if (files.length > 5) {
+        alert("You can only upload a maximum of 5 files.");
+        this.value = "";
+      } else {
+        for (const file of files) {
+          if (file.size > 5 * 1024 * 1024) {
+            alert("Each file must be less than 5MB.");
+            this.value = "";
+            break;
+          }
+        }
+      }
+    });
 
-    if (isFrench) {
-      document.documentElement.lang = "fr";
-      document.getElementById("form-title").textContent = "Formulaire de soumission de projet";
-      document.getElementById("intro-text").textContent =
-        "Nous sommes ravis d’en savoir plus sur votre projet ! Veuillez remplir le formulaire ci-dessous pour nous communiquer les détails de votre projet.";
+    // Hide 'Required' message on input
+    document.querySelectorAll('input, textarea').forEach(el => {
+      el.addEventListener('input', () => {
+        const reqMsg = document.getElementById(el.id + "Required");
+        if (reqMsg) reqMsg.style.display = "none";
+      });
+    });
 
-      document.getElementById("label-fullName").innerHTML = 'Nom complet <span class="required-message" id="fullNameRequired">Obligatoire</span>';
-      document.getElementById("hint-fullName").textContent = "Veuillez indiquer votre nom complet.";
-
-      document.getElementById("label-date").innerHTML = 'Date <span class="required-message" id="dateRequired">Obligatoire</span>';
-      document.getElementById("hint-date").textContent = "Veuillez indiquer la date d'aujourd'hui.";
-
-      document.getElementById("label-phone").innerHTML = 'Téléphone <span class="required-message" id="phoneRequired">Obligatoire</span>';
-      document.getElementById("hint-phone").textContent = "Veuillez fournir votre numéro de téléphone.";
-
-      document.getElementById("label-email").innerHTML = 'Email <span class="required-message" id="emailRequired">Obligatoire</span>';
-      document.getElementById("hint-email").textContent = "Veuillez fournir votre adresse email.";
-
-      document.getElementById("label-files").innerHTML = 'Télécharger des fichiers <span class="required-message" id="filesRequired">Obligatoire</span>';
-      document.getElementById("hint-files").textContent = "Vous pouvez télécharger un maximum de cinq fichiers, chacun d’une taille maximale de 5 Mo.";
-
-      document.getElementById("label-consent").innerHTML = 'Consentement à partager <span class="required-message" id="consentRequired">Obligatoire</span>';
-      document.getElementById("hint-consent").textContent = "J’accepte que mes images et informations soumises puissent être utilisées à des fins de médias sociaux et de site web.";
-
-      document.getElementById("label-projectDetails").textContent = 'Détails du projet';
-      document.getElementById("hint-projectDetails").textContent = "Veuillez fournir des détails sur votre projet, tels que les fenêtres ou les portes utilisées.";
-
-      document.getElementById("label-accuracy").innerHTML = 'Confirmation d’exactitude <span class="required-message" id="accuracyRequired">Obligatoire</span>';
-      document.getElementById("hint-accuracy").textContent = "Les informations que j’ai fournies sont exactes et de mon propre aveu.";
-
-      document.querySelector('button[type="submit"]').textContent = "Soumettre";
-      document.querySelector('.success').textContent = "Merci ! Votre soumission a été reçue.";
-      document.querySelector('.error').textContent = "Une erreur s’est produite. Veuillez réessayer.";
-    }
-
-    // Form submission logic
-    document.getElementById('projectForm').addEventListener('submit', async function (event) {
+    // Form submission
+    document.getElementById("projectForm").addEventListener("submit", async function (event) {
       event.preventDefault();
       const form = event.target;
       const formData = new FormData(form);
       const loading = form.querySelector('.loading');
       const success = form.querySelector('.success');
       const error = form.querySelector('.error');
-
       loading.style.display = 'block';
       success.style.display = 'none';
       error.style.display = 'none';
@@ -212,31 +221,16 @@
 
         if (response.ok) {
           form.reset();
-          dateInput.value = today; // Reset date
+          dateInput.value = today;
           success.style.display = 'block';
         } else {
-          throw new Error('Network error');
+          throw new Error('Submission failed');
         }
-      } catch (err) {
+      } catch (e) {
         error.style.display = 'block';
       } finally {
         loading.style.display = 'none';
       }
-    });
-
-    // Hide "Required" when input starts
-    document.querySelectorAll('input, textarea').forEach(el => {
-      el.addEventListener('input', function () {
-        const requiredMsg = document.getElementById(el.id + 'Required');
-        if (requiredMsg) requiredMsg.style.display = 'none';
-      });
-    });
-
-    document.querySelectorAll('input[type="file"]').forEach(el => {
-      el.addEventListener('change', function () {
-        const requiredMsg = document.getElementById(el.id + 'Required');
-        if (requiredMsg) requiredMsg.style.display = 'none';
-      });
     });
   </script>
 </body>
