@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Submission Form</title>
     <style>
+        /* [Same CSS you already had] */
         * {
             box-sizing: border-box;
         }
@@ -13,11 +14,11 @@
             background-color: #f4f4f4;
             display: flex;
             justify-content: center;
-            align-items: start; /* Changed to prevent cutting off the top */
-            min-height: 100vh; /* Allows content to grow and be scrollable */
+            align-items: start;
+            min-height: 100vh;
             margin: 0;
             padding: 20px;
-            overflow-y: auto; /* Enables vertical scroll if content is too tall */
+            overflow-y: auto;
         }
         .form-container {
             background-color: #fff;
@@ -105,48 +106,48 @@
 </head>
 <body>
     <div class="form-container">
-        <h1>Website Form - Project Submission</h1>
-        <p>We are excited to learn more about your project! Please complete the form below to share the details of your project with us. Whether you are a homeowner, or builder this is the first step in showcasing your project with JELD-WEN of Canada.</p>
-        <p>Our team will review your submission and follow up with you to see if we need more details before showcasing your project on our website and socials.</p>
+        <h1 id="title">Website Form - Project Submission</h1>
+        <p id="intro1">We are excited to learn more about your project!</p>
+        <p id="intro2">Our team will review your submission and follow up with you.</p>
         <form id="projectForm">
-            <label for="fullName">Full Name <span class="required-message" id="fullNameRequired">Required</span></label>
+            <label for="fullName" id="labelFullName">Full Name <span class="required-message" id="fullNameRequired">Required</span></label>
             <input type="text" id="fullName" name="fullName" maxlength="200" required>
-            <small>Please provide your full name.</small>
+            <small id="hintFullName">Please provide your full name.</small>
 
-            <label for="date">Date <span class="required-message" id="dateRequired">Required</span></label>
+            <label for="date" id="labelDate">Date <span class="required-message" id="dateRequired">Required</span></label>
             <input type="date" id="date" name="date" required>
-            <small>Please provide the date you are submitting this form.</small>
+            <small id="hintDate">Please provide the date.</small>
 
-            <label for="phone">Phone <span class="required-message" id="phoneRequired">Required</span></label>
+            <label for="phone" id="labelPhone">Phone <span class="required-message" id="phoneRequired">Required</span></label>
             <input type="tel" id="phone" name="phone" required>
-            <small>Please provide your phone number.</small>
+            <small id="hintPhone">Please provide your phone number.</small>
 
-            <label for="email">Email <span class="required-message" id="emailRequired">Required</span></label>
+            <label for="email" id="labelEmail">Email <span class="required-message" id="emailRequired">Required</span></label>
             <input type="email" id="email" name="email" required>
-            <small>Please provide your email.</small>
+            <small id="hintEmail">Please provide your email.</small>
 
-            <label for="files">Upload Files <span class="required-message" id="filesRequired">Required</span></label>
+            <label for="files" id="labelFiles">Upload Files <span class="required-message" id="filesRequired">Required</span></label>
             <input type="file" id="files" name="files" multiple required>
-            <small>You can upload a maximum of five files, each with a size limit of 5MB.</small>
+            <small id="hintFiles">Max 5 files, each under 5MB.</small>
 
-            <label for="consent">Consent to Share <span class="required-message" id="consentRequired">Required</span></label>
+            <label for="consent" id="labelConsent">Consent to Share <span class="required-message" id="consentRequired">Required</span></label>
             <input type="checkbox" id="consent" name="consent" required>
-            <small>I agree that my submitted images and project information may be used for social media and website purposes.</small>
+            <small id="hintConsent">I agree to share images and info.</small>
 
-            <label for="projectDetails">Project Details</label>
+            <label for="projectDetails" id="labelDetails">Project Details</label>
             <textarea id="projectDetails" name="projectDetails" maxlength="1000"></textarea>
-            <small>Please provide details of your project such as windows or doors used.</small>
+            <small id="hintDetails">Details like windows or doors used.</small>
 
-            <label for="accuracy">Accuracy Confirmation <span class="required-message" id="accuracyRequired">Required</span></label>
+            <label for="accuracy" id="labelAccuracy">Accuracy Confirmation <span class="required-message" id="accuracyRequired">Required</span></label>
             <input type="checkbox" id="accuracy" name="accuracy" required>
-            <small>The information I have provided is accurate and by own admission.</small>
+            <small id="hintAccuracy">Information is accurate and my own.</small>
 
-            <button type="submit">Submit</button>
+            <button type="submit" id="submitBtn">Submit</button>
             <div class="loading">Submitting...</div>
-            <div class="success">Thank you! Your submission has been received.</div>
-            <div class="error">An error occurred. Please try again.</div>
+            <div class="success" id="successMessage">Thank you! Your submission has been received.</div>
+            <div class="error" id="errorMessage">An error occurred. Please try again.</div>
         </form>
-        <div class="footer">Thank you for sharing your project with us!</div>
+        <div class="footer" id="footerText">Thank you for sharing your project with us!</div>
         <div class="social-icons">
             <a href="https://www.facebook.com/JELDWENCanada/" target="_blank">
                 <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
@@ -159,6 +160,110 @@
             </a>
         </div>
     </div>
+
+    <script>
+        const translations = {
+            en: {
+                title: "Website Form - Project Submission",
+                intro1: "We are excited to learn more about your project! Please complete the form below to share the details of your project with us.",
+                intro2: "Our team will review your submission and follow up with you to see if we need more details before showcasing your project on our website and socials.",
+                fullName: "Full Name",
+                fullNameHint: "Please provide your full name.",
+                date: "Date",
+                dateHint: "Please provide the date you are submitting this form.",
+                phone: "Phone",
+                phoneHint: "Please provide your phone number.",
+                email: "Email",
+                emailHint: "Please provide your email.",
+                upload: "Upload Files",
+                uploadHint: "You can upload a maximum of five files, each with a size limit of 5MB.",
+                consent: "Consent to Share",
+                consentHint: "I agree that my submitted images and project information may be used for social media and website purposes.",
+                projectDetails: "Project Details",
+                projectDetailsHint: "Please provide details of your project such as windows or doors used.",
+                accuracy: "Accuracy Confirmation",
+                accuracyHint: "The information I have provided is accurate and by own admission.",
+                submit: "Submit",
+                success: "Thank you! Your submission has been received.",
+                error: "An error occurred. Please try again.",
+                footer: "Thank you for sharing your project with us!",
+                required: "Required"
+            },
+            fr: {
+                title: "Formulaire de soumission de projet",
+                intro1: "Nous sommes ravis d'en savoir plus sur votre projet ! Veuillez remplir le formulaire ci-dessous pour partager les détails de votre projet avec nous.",
+                intro2: "Notre équipe examinera votre soumission et vous contactera si nous avons besoin de plus de détails avant de présenter votre projet sur notre site Web et nos réseaux sociaux.",
+                fullName: "Nom complet",
+                fullNameHint: "Veuillez indiquer votre nom complet.",
+                date: "Date",
+                dateHint: "Veuillez indiquer la date de soumission du formulaire.",
+                phone: "Téléphone",
+                phoneHint: "Veuillez indiquer votre numéro de téléphone.",
+                email: "Courriel",
+                emailHint: "Veuillez indiquer votre adresse courriel.",
+                upload: "Téléverser des fichiers",
+                uploadHint: "Vous pouvez téléverser un maximum de cinq fichiers, chacun d'une taille maximale de 5 Mo.",
+                consent: "Consentement à partager",
+                consentHint: "J'accepte que mes images et informations de projet soumises soient utilisées à des fins de médias sociaux et de site Web.",
+                projectDetails: "Détails du projet",
+                projectDetailsHint: "Veuillez fournir des détails sur votre projet, tels que les fenêtres ou les portes utilisées.",
+                accuracy: "Confirmation de l'exactitude",
+                accuracyHint: "Les informations que j'ai fournies sont exactes et selon ma propre déclaration.",
+                submit: "Soumettre",
+                success: "Merci ! Votre soumission a été reçue.",
+                error: "Une erreur s'est produite. Veuillez réessayer.",
+                footer: "Merci de partager votre projet avec nous !",
+                required: "Requis"
+            }
+        };
+
+        function detectLanguage() {
+            const lang = document.documentElement.lang || navigator.language || 'en';
+            return lang.startsWith('fr') ? 'fr' : 'en';
+        }
+
+        function applyTranslations(lang) {
+            const t = translations[lang];
+
+            document.getElementById('title').innerText = t.title;
+            document.getElementById('intro1').innerText = t.intro1;
+            document.getElementById('intro2').innerText = t.intro2;
+
+            document.getElementById('labelFullName').innerHTML = `${t.fullName} <span class="required-message" id="fullNameRequired">${t.required}</span>`;
+            document.getElementById('hintFullName').innerText = t.fullNameHint;
+
+            document.getElementById('labelDate').innerHTML = `${t.date} <span class="required-message" id="dateRequired">${t.required}</span>`;
+            document.getElementById('hintDate').innerText = t.dateHint;
+
+            document.getElementById('labelPhone').innerHTML = `${t.phone} <span class="required-message" id="phoneRequired">${t.required}</span>`;
+            document.getElementById('hintPhone').innerText = t.phoneHint;
+
+            document.getElementById('labelEmail').innerHTML = `${t.email} <span class="required-message" id="emailRequired">${t.required}</span>`;
+            document.getElementById('hintEmail').innerText = t.emailHint;
+
+            document.getElementById('labelFiles').innerHTML = `${t.upload} <span class="required-message" id="filesRequired">${t.required}</span>`;
+            document.getElementById('hintFiles').innerText = t.uploadHint;
+
+            document.getElementById('labelConsent').innerHTML = `${t.consent} <span class="required-message" id="consentRequired">${t.required}</span>`;
+            document.getElementById('hintConsent').innerText = t.consentHint;
+
+            document.getElementById('labelDetails').innerText = t.projectDetails;
+            document.getElementById('hintDetails').innerText = t.projectDetailsHint;
+
+            document.getElementById('labelAccuracy').innerHTML = `${t.accuracy} <span class="required-message" id="accuracyRequired">${t.required}</span>`;
+            document.getElementById('hintAccuracy').innerText = t.accuracyHint;
+
+            document.getElementById('submitBtn').innerText = t.submit;
+            document.getElementById('successMessage').innerText = t.success;
+            document.getElementById('errorMessage').innerText = t.error;
+            document.getElementById('footerText').innerText = t.footer;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const lang = detectLanguage();
+            applyTranslations(lang);
+        });
+    </script>
 
     <script>
         document.getElementById('projectForm').addEventListener('submit', async function(event) {
@@ -191,7 +296,7 @@
             }
         });
 
-        // Hide 'Required' message when user starts typing or uploading
+        // Hide 'Required' message when user types
         document.querySelectorAll('input, textarea').forEach(element => {
             element.addEventListener('input', function() {
                 const requiredMessage = document.getElementById(element.id + 'Required');
@@ -212,4 +317,3 @@
     </script>
 </body>
 </html>
-
