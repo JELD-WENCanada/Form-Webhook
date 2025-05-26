@@ -40,17 +40,46 @@ module.exports = async (req, res) => {
       return res.status(500).json({ error: 'Failed to parse form data' });
     }
 
-    let emailHtml = '<h2>New Form Submission</h2><table cellpadding="6" cellspacing="0" border="1" style="border-collapse: collapse;">';
+    // Friendly field labels
+    const fieldLabels = {
+      fullName: 'Full Name',
+      date: 'Date',
+      phone: 'Phone',
+      email: 'Email',
+      projectDetails: 'Project Details',
+      consent: 'Consent to Share',
+      accuracy: 'Accuracy Confirmation'
+    };
+
+    // HTML email
+    let emailHtml = `
+      <h2>New Form Submission</h2>
+      <p>A customer has submitted their information and images for a portfolio project. Please take a moment to review the submission below.</p>
+      <table cellpadding="6" cellspacing="0" border="1" style="border-collapse: collapse;">
+    `;
+
     for (const [key, value] of Object.entries(fields)) {
-      emailHtml += `<tr><td><strong>${key}</strong></td><td>${value}</td></tr>`;
+      const label = fieldLabels[key] || key;
+      let displayValue = value;
+      if (key === 'consent' || key === 'accuracy') {
+        displayValue = value === 'on' ? '✅ Yes' : '❌ No';
+      }
+      emailHtml += `<tr><td><strong>${label}</strong></td><td>${displayValue}</td></tr>`;
     }
     emailHtml += '</table>';
 
-    let emailText = 'New Form Submission\n\n';
+    // Plain text email
+    let emailText = `New Form Submission\n\nA customer has submitted their information and images for a portfolio project. Please review the submission below:\n\n`;
     for (const [key, value] of Object.entries(fields)) {
-      emailText += `${key}: ${value}\n`;
+      const label = fieldLabels[key] || key;
+      let displayValue = value;
+      if (key === 'consent' || key === 'accuracy') {
+        displayValue = value === 'on' ? 'Yes' : 'No';
+      }
+      emailText += `${label}: ${displayValue}\n`;
     }
 
+    // Attachments
     const attachments = [];
     const mimeTypes = {
       '.jpg': 'image/jpeg',
