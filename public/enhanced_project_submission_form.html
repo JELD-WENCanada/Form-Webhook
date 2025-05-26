@@ -142,11 +142,9 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // Get lang from URL query string
       const params = new URLSearchParams(window.location.search);
       const lang = params.get("lang") === "fr" ? "fr" : "en";
 
-      // Translate page
       document.querySelectorAll("[data-en]").forEach(el => {
         const translation = el.getAttribute(`data-${lang}`);
         if (translation) {
@@ -154,13 +152,11 @@
         }
       });
 
-      // Limit date to today
       const today = new Date().toISOString().split("T")[0];
       const dateInput = document.getElementById("date");
       dateInput.value = today;
       dateInput.max = today;
 
-      // File validation
       const fileInput = document.getElementById("files");
       const filePreview = document.getElementById("filePreview");
       fileInput.addEventListener("change", function () {
@@ -182,7 +178,6 @@
         }
       });
 
-      // Submit handler
       document.getElementById("projectForm").addEventListener("submit", async function (e) {
         e.preventDefault();
         const form = e.target;
@@ -190,6 +185,18 @@
         const button = document.getElementById("submitBtn");
         const success = form.querySelector(".success");
         const error = form.querySelector(".error");
+
+        // Fix: Submit checkbox state even if unchecked
+        ["consent", "accuracy"].forEach(id => {
+          const checkbox = document.getElementById(id);
+          const existingHidden = form.querySelector(`input[type="hidden"][name="${id}"]`);
+          if (existingHidden) form.removeChild(existingHidden);
+          const hiddenInput = document.createElement("input");
+          hiddenInput.type = "hidden";
+          hiddenInput.name = id;
+          hiddenInput.value = checkbox.checked ? "on" : "off";
+          form.appendChild(hiddenInput);
+        });
 
         button.classList.add("loading");
         success.style.display = "none";
