@@ -58,7 +58,7 @@
       color: #555;
     }
     button {
-      background-color: #1D446B;
+      background-color: #007BFF;
       color: #fff;
       padding: 12px;
       border: none;
@@ -134,25 +134,31 @@
         The information I have provided is accurate and by my own admission.
       </small>
 
-      <button type="submit" id="submitBtn">Submit</button>
-      <div class="success">Thank you! Your submission has been received.</div>
-      <div class="error">An error occurred. Please try again.</div>
+      <button type="submit" id="submitBtn" data-en="Submit" data-fr="Soumettre">Submit</button>
+      <div class="success" data-en="Thank you! Your submission has been received." data-fr="Merci! Votre soumission a été reçue.">Thank you! Your submission has been received.</div>
+      <div class="error" data-en="An error occurred. Please try again." data-fr="Une erreur s'est produite. Veuillez réessayer.">An error occurred. Please try again.</div>
     </form>
   </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
+      // Get lang from URL query string
+      const params = new URLSearchParams(window.location.search);
+      const lang = params.get("lang") === "fr" ? "fr" : "en";
+
+      // Translate page
+      document.querySelectorAll("[data-en]").forEach(el => {
+        const translation = el.getAttribute(`data-${lang}`);
+        if (translation) {
+          el.textContent = translation;
+        }
+      });
+
       // Limit date to today
-      const today = new Date().toISOString().split('T')[0];
+      const today = new Date().toISOString().split("T")[0];
       const dateInput = document.getElementById("date");
       dateInput.value = today;
       dateInput.max = today;
-
-      // Language detection and translation
-      const lang = navigator.language.startsWith('fr') ? 'fr' : 'en';
-      document.querySelectorAll('[data-en]').forEach(el => {
-        el.textContent = el.getAttribute(`data-${lang}`);
-      });
 
       // File validation
       const fileInput = document.getElementById("files");
@@ -161,13 +167,13 @@
         const files = Array.from(this.files);
         filePreview.innerHTML = "";
         if (files.length > 5) {
-          alert("You can upload a maximum of 5 files.");
+          alert(lang === "fr" ? "Vous pouvez téléverser un maximum de 5 fichiers." : "You can upload a maximum of 5 files.");
           this.value = "";
           return;
         }
         for (const file of files) {
           if (file.size > 5 * 1024 * 1024) {
-            alert(`File ${file.name} exceeds 5MB limit.`);
+            alert((lang === "fr" ? "Le fichier " : "File ") + file.name + (lang === "fr" ? " dépasse la limite de 5 Mo." : " exceeds 5MB limit."));
             this.value = "";
             filePreview.innerHTML = "";
             return;
@@ -211,4 +217,3 @@
   </script>
 </body>
 </html>
-
