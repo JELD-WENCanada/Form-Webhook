@@ -58,25 +58,32 @@ module.exports = async (req, res) => {
       <table cellpadding="6" cellspacing="0" border="1" style="border-collapse: collapse;">
     `;
 
-    for (const [key, value] of Object.entries(fields)) {
-      const label = fieldLabels[key] || key;
+    for (const key of Object.keys(fieldLabels)) {
+      const label = fieldLabels[key];
+      const value = fields[key];
       let displayValue = value;
+
       if (key === 'consent' || key === 'accuracy') {
-        displayValue = value === 'on' ? '✅ Yes' : '❌ No';
+        displayValue = value ? '✅ Yes' : '❌ No';
       }
-      emailHtml += `<tr><td><strong>${label}</strong></td><td>${displayValue}</td></tr>`;
+
+      emailHtml += `<tr><td><strong>${label}</strong></td><td>${displayValue || ''}</td></tr>`;
     }
     emailHtml += '</table>';
 
     // Plain text email
     let emailText = `New Form Submission\n\nA customer has submitted their information and images for a portfolio project. Please review the submission below:\n\n`;
-    for (const [key, value] of Object.entries(fields)) {
-      const label = fieldLabels[key] || key;
+
+    for (const key of Object.keys(fieldLabels)) {
+      const label = fieldLabels[key];
+      const value = fields[key];
       let displayValue = value;
+
       if (key === 'consent' || key === 'accuracy') {
-        displayValue = value === 'on' ? 'Yes' : 'No';
+        displayValue = value ? 'Yes' : 'No';
       }
-      emailText += `${label}: ${displayValue}\n`;
+
+      emailText += `${label}: ${displayValue || ''}\n`;
     }
 
     // Attachments
