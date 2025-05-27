@@ -261,7 +261,6 @@ document.addEventListener("DOMContentLoaded", () => {
     for (const file of files) {
       const compressed = await imageCompression(file, {
         maxSizeMB: 1,
-        maxWidthOrHeight: 1920,
         useWebWorker: true,
       });
       formData.append("files", compressed, compressed.name);
@@ -287,12 +286,13 @@ document.addEventListener("DOMContentLoaded", () => {
         method: "POST",
         body: formData,
       });
-      if (response.ok) {
+      const result = await response.json();
+      if (response.ok && result.message === 'Email sent successfully') {
         form.reset();
         filePreview.innerHTML = "";
         success.style.display = "block";
       } else {
-        throw new Error("Network error");
+        throw new Error(result.error || 'Network error');
       }
     } catch (err) {
       error.style.display = "block";
@@ -302,5 +302,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+
 </body>
 </html>
