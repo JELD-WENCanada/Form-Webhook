@@ -222,5 +222,85 @@
       });
     });
   </script>
+
+<script src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const fileInput = document.getElementById("files");
+  const filePreview = document.getElementById("filePreview");
+  const form = document.getElementById("projectForm");
+
+  fileInput.addEventListener("change", function () {
+    const files = Array.from(this.files);
+    filePreview.innerHTML = "";
+    if (files.length > 5) {
+      alert("You can upload a maximum of 5 files.");
+      this.value = "";
+      return;
+    }
+    for (const file of files) {
+      if (file.size > 5 * 1024 * 1024) {
+        alert(`File ${file.name} exceeds 5MB limit.`);
+        this.value = "";
+        filePreview.innerHTML = "";
+        return;
+      }
+      filePreview.innerHTML += `<div>${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)</div>`;
+    }
+  });
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const button = document.getElementById("submitBtn");
+    const success = form.querySelector(".success");
+    const error = form.querySelector(".error");
+    const formData = new FormData();
+
+    // Compress and append files
+    const files = Array.from(fileInput.files);
+    for (const file of files) {
+      const compressed = await imageCompression(file, {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true,
+      });
+      formData.append("files", compressed, compressed.name);
+    }
+
+    // Append other form fields
+    new FormData(form).forEach((value, key) => {
+      if (key !== "files") formData.append(key, value);
+    });
+
+    // Ensure checkboxes are submitted
+    ["consent", "accuracy"].forEach(id => {
+      const checkbox = document.getElementById(id);
+      formData.set(id, checkbox.checked ? "on" : "off");
+    });
+
+    button.classList.add("loading");
+    success.style.display = "none";
+    error.style.display = "none";
+
+    try {
+      const response = await fetch("https://form-webhook-omega.vercel.app/api/submit", {
+        method: "POST",
+        body: formData,
+      });
+      if (response.ok) {
+        form.reset();
+        filePreview.innerHTML = "";
+        success.style.display = "block";
+      } else {
+        throw new Error("Network error");
+      }
+    } catch (err) {
+      error.style.display = "block";
+    } finally {
+      button.classList.remove("loading");
+    }
+  });
+});
+</script>
 </body>
 </html>
