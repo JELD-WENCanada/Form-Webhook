@@ -47,6 +47,7 @@ module.exports = async (req, res) => {
       phone: 'Phone',
       email: 'Email',
       projectDetails: 'Project Details',
+      supplier: 'Supplier',
       consent: 'Consent to Share',
       accuracy: 'Accuracy Confirmation'
     };

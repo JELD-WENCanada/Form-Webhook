@@ -40,7 +40,7 @@
       margin: 20px 0 5px;
       font-weight: bold;
     }
-    input, textarea {
+    input, textarea, select {
       width: 100%;
       padding: 10px;
       border: 1px solid #ccc;
@@ -127,6 +127,19 @@
       <small data-en="Please provide project specifics such as windows or doors used." data-fr="Veuillez fournir les détails du projet comme les fenêtres ou portes utilisées.">
         Please provide project specifics such as windows or doors used.
       </small>
+
+      <label for="supplier" data-en="Supplier" data-fr="Fournisseur">Supplier</label>
+      <select id="supplier" name="supplier">
+        <option value="" data-en="— Select (optional) —" data-fr="— Sélectionner (facultatif) —">— Select (optional) —</option>
+        <option value="Timber Mart">Timber Mart</option>
+        <option value="The Home Depot">The Home Depot</option>
+        <option value="Rona+">Rona+</option>
+        <option value="ILDC">ILDC</option>
+        <option value="Home Hardware">Home Hardware</option>
+        <option value="Sexton">Sexton</option>
+        <option value="Castle">Castle</option>
+        <option value="Other">Other</option>
+      </select>
 
       <label for="accuracy" data-en="Accuracy Confirmation" data-fr="Confirmation d'exactitude">Accuracy Confirmation</label>
       <input type="checkbox" id="accuracy" name="accuracy" required>
