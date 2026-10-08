@@ -94,7 +94,15 @@ module.exports = async (req, res) => {
       '.jpeg': 'image/jpeg',
       '.png': 'image/png',
       '.gif': 'image/gif',
+      '.webp': 'image/webp',
       '.pdf': 'application/pdf',
+      '.doc': 'application/msword',
+      '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      '.xls': 'application/vnd.ms-excel',
+      '.xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      '.csv': 'text/csv',
+      '.ppt': 'application/vnd.ms-powerpoint',
+      '.pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
     };
 
     for (const [key, fileOrFiles] of Object.entries(files)) {
@@ -115,7 +123,7 @@ module.exports = async (req, res) => {
           cid: `image-${attachments.length + 1}`,
         });
 
-        if (['.jpg', '.jpeg', '.png', '.gif'].includes(ext)) {
+        if (['.jpg', '.jpeg', '.png', '.gif', '.webp'].includes(ext)) {
           emailHtml += `<br><img src="cid:image-${attachments.length}" alt="Image ${attachments.length}">`;
         }
       }

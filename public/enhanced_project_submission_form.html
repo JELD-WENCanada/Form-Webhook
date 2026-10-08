@@ -110,10 +110,10 @@
       <input type="email" id="email" name="email" required>
 
       <label for="files" data-en="Upload Files" data-fr="Téléverser des fichiers">Upload Files</label>
-      <input type="file" id="files" name="files" multiple required>
+      <input type="file" id="files" name="files" multiple required accept=".jpg,.jpeg,.png,.gif,.webp,.pdf,.doc,.docx,.xls,.xlsx,.csv,.ppt,.pptx,image/*,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation">
       <div class="file-preview" id="filePreview"></div>
-      <small data-en="You can upload up to 5 files. Each must be under 5MB." data-fr="Vous pouvez téléverser jusqu'à 5 fichiers. Chacun doit faire moins de 5 Mo.">
-        You can upload up to 5 files. Each must be under 5MB.
+      <small data-en="You can upload up to 5 files (images, PDF, Word, Excel, or PowerPoint). Each must be under 5MB." data-fr="Vous pouvez téléverser jusqu'à 5 fichiers (images, PDF, Word, Excel ou PowerPoint). Chacun doit faire moins de 5 Mo.">
+        You can upload up to 5 files (images, PDF, Word, Excel, or PowerPoint). Each must be under 5MB.
       </small>
 
       <label for="consent" data-en="Consent to Share" data-fr="Consentement à partager">Consent to Share</label>
@@ -181,6 +181,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let isSubmitting = false;
 
+  const allowedExtensions = [
+    ".jpg", ".jpeg", ".png", ".gif", ".webp",
+    ".pdf",
+    ".doc", ".docx",
+    ".xls", ".xlsx", ".csv",
+    ".ppt", ".pptx"
+  ];
+  const imageExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp"];
+
+  function getFileExtension(filename) {
+    const index = filename.lastIndexOf(".");
+    return index === -1 ? "" : filename.substring(index).toLowerCase();
+  }
+
+  function isAllowedFile(file) {
+    return allowedExtensions.includes(getFileExtension(file.name));
+  }
+
+  function isImageFile(file) {
+    if (file.type && file.type.startsWith("image/")) return true;
+    return imageExtensions.includes(getFileExtension(file.name));
+  }
+
   // File preview + validation
   fileInput.addEventListener("change", function () {
     const files = Array.from(this.files);
@@ -191,6 +214,12 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     for (const file of files) {
+      if (!isAllowedFile(file)) {
+        alert(`File ${file.name} is not a supported type. Please upload images, PDF, Word, Excel, or PowerPoint files.`);
+        this.value = "";
+        filePreview.innerHTML = "";
+        return;
+      }
       if (file.size > 5 * 1024 * 1024) {
         alert(`File ${file.name} exceeds 5MB limit.`);
         this.value = "";
@@ -216,15 +245,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       for (const file of files) {
-        const compressed = await imageCompression(file, {
-          maxSizeMB: 1,
-          maxWidthOrHeight: 1920,
-          useWebWorker: true,
-          fileType: file.type === "image/png" ? "image/jpeg" : file.type
-        });
-        const ext = file.type === 'image/png' ? '.jpg' : file.name.substring(file.name.lastIndexOf('.'));
-        const name = file.name.replace(/\.[^/.]+$/, '') + ext;
-        formData.append("files", compressed, name);
+        if (!isAllowedFile(file)) {
+          throw new Error(`Unsupported file type: ${file.name}`);
+        }
+
+        if (isImageFile(file)) {
+          const compressed = await imageCompression(file, {
+            maxSizeMB: 1,
+            maxWidthOrHeight: 1920,
+            useWebWorker: true,
+            fileType: file.type === "image/png" ? "image/jpeg" : file.type
+          });
+          const ext = file.type === "image/png" ? ".jpg" : getFileExtension(file.name);
+          const name = file.name.replace(/\.[^/.]+$/, "") + ext;
+          formData.append("files", compressed, name);
+        } else {
+          formData.append("files", file, file.name);
+        }
       }
 
       const plainFormData = new FormData(form);
